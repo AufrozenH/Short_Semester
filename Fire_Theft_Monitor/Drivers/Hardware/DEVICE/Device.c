@@ -1,3 +1,7 @@
+/*
+ * @Author: wangzihao 2281036574@qq.com 21041428
+ * @Date: 2024-03-18 
+ */
 #include "main.h"
 #include "tim.h"
 #include "UI.h"
