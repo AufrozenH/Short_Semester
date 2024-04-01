@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "math.h": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "main.h": "c"
     }
 }

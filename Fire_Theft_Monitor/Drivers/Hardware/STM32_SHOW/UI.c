@@ -41,7 +41,7 @@ short frame_x,frame_x_trg;//滑动框目前x值，滑动框目标x值
 short para_y,para_y_trg;//参数框目前y值，参数框目标y值
 short para_x,para_x_trg;//参数框目前x值，参数框目标x值
 uint8_t Temp_stand=27;//温度上限值0~90℃
-uint8_t Shock_sens=5;//震动灵敏度0~9级
+uint8_t Shock_sens=1;//震动灵敏度0~9级
 uint8_t Alarm_time=30;//报警时长0~60S
 float Upload_inter=0.1;//上传间隔100ms~10S
 float Temp=0;//实际温度值
