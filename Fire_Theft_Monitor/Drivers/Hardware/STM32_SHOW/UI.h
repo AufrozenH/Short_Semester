@@ -100,6 +100,18 @@ extern uint8_t Temp_state;//温度报警标志位 1：温度超过阈值
 extern uint8_t Shock_state;//震动报警标志位 1：加速度超过阈值
 extern uint8_t mpuok;//mpu6050初始化状态
 extern uint8_t num[4];
+extern float vTemp[MAX_DATALEN];//温度数据缓存
+extern int cTemp;//温度数据缓存计数
+extern float vPitch[MAX_DATALEN];//俯仰角数据缓存
+extern int cPitch;//俯仰角数据缓存计数
+extern float vRoll[MAX_DATALEN];//横滚角数据缓存
+extern int cRoll;//横滚角数据缓存计数
+extern float vYaw[MAX_DATALEN];//航向角数据缓存
+extern int cYaw;//航向角数据缓存计数
+extern char FAX[10];//记录实际陀螺仪俯仰角数组
+extern char FAY[10];//记录实际陀螺仪横滚角数组
+extern char FAZ[10];//记录实际陀螺仪航向角数组
+extern int mpu_gap;//读取陀螺仪数值间隔时间（默认 50 可切换为1000）
 
 void SYS_Init(void);
 void UI_Init(void);
@@ -115,5 +127,7 @@ void UI_PARA(void);
 void UI_key(void);
 void UI_run(short *a,short *a_trg,uint8_t step,uint8_t slow_cnt);
 int PID(int Targrt, int Now, Pid_Error *Obj);
+void GUI_Point(int16_t x,int16_t y);
+void GUI_Line(int16_t x1,int16_t y1,int16_t x2,int16_t y2);
 
 #endif

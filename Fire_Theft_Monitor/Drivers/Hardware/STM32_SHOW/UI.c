@@ -9,7 +9,8 @@
 #include "cmsis_os.h"
 #include "stdio.h"
 #include "DS_18B20.h"
-#include "MPU6050.h"
+#include "MPU6050.h"  
+#include <Display_3D.h>
 
 u8g2_t u8g2;
 
@@ -40,7 +41,7 @@ short frame_y,frame_y_trg;//选择框目前y值，选择框目标y值
 short frame_x,frame_x_trg;//滑动框目前x值，滑动框目标x值
 short para_y,para_y_trg;//参数框目前y值，参数框目标y值
 short para_x,para_x_trg;//参数框目前x值，参数框目标x值
-uint8_t Temp_stand=27;//温度上限值0~90℃
+uint8_t Temp_stand=30;//温度上限值0~90℃
 uint8_t Shock_sens=1;//震动灵敏度0~9级
 uint8_t Alarm_time=30;//报警时长0~60S
 float Upload_inter=0.1;//上传间隔100ms~10S
@@ -52,6 +53,10 @@ char Az[10];//记录实际陀螺仪az数组
 char Gx[10];//记录实际陀螺仪gx数组
 char Gy[10];//记录实际陀螺仪gy数组
 char Gz[10];//记录实际陀螺仪gz数组
+char FAX[10];//记录实际陀螺仪俯仰角数组
+char FAY[10];//记录实际陀螺仪横滚角数组
+char FAZ[10];//记录实际陀螺仪航向角数组
+
 uint8_t Temp_state=0;//温度报警标志位 1：温度超过阈值
 uint8_t Shock_state=0;//震动报警标志位 1：加速度超过阈值
 uint32_t logo_tick=0;//定义静态变量，存储进入启动界面时的时间戳 
@@ -60,6 +65,17 @@ uint8_t leds_sta=0x00;//led灯初始状态（全灭）
 uint8_t start_beep=0;//启动蜂鸣器标志位
 uint8_t num[4]={0};
 uint8_t mpuok = 0;//mpu6050初始化状态
+int mpu_gap = 0;//记录数值间隔时间（默认 0 可切换为1000）0意味着50记录一次
+
+float vTemp[MAX_DATALEN];//温度数据缓存
+int cTemp=0;//温度数据缓存计数
+float vPitch[MAX_DATALEN];//俯仰角数据缓存
+int cPitch=0;//俯仰角数据缓存计数
+float vRoll[MAX_DATALEN];//横滚角数据缓存
+int cRoll=0;//横滚角数据缓存计数
+float vYaw[MAX_DATALEN];//航向角数据缓存
+int cYaw=0;//航向角数据缓存计数
+
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      系统初始化
 //  @param      null              
@@ -220,7 +236,7 @@ void UI_menu(void)
 		}
 		
 		
-	  	frame_y_trg=(UI_Select-1)*16;
+	  frame_y_trg=(UI_Select-1)*16;
 		frame_y = PID(frame_y_trg, frame_y, &Dynamic_menu);
 		
 		u8g2_SetDrawColor(&u8g2,2);
@@ -249,14 +265,14 @@ void UI_page(void)
 			case GUI_PARA:{UI_PARA();break;}
 			case GUI_CURV:{UI_CURV();break;}						
 		}
-		
 		//绘制滑动页面框
 		uint8_t frame_len =(128-53)/list[UI_Select-1].page;
 	  	if(PAGE_Select==list[UI_Select-1].page-1)frame_x_trg=127-frame_len;
 		else frame_x_trg=52+frame_len*PAGE_Select;
-		u8g2_DrawRFrame(&u8g2,frame_x,60,frame_len,4,0);
-		UI_run(&frame_x,&frame_x_trg,10,5);
-			
+		//切换显示
+		if(mpu_gap == 1000)u8g2_DrawRFrame(&u8g2,frame_x,60,frame_len,4,1);
+		else u8g2_DrawFrame(&u8g2,frame_x,60,frame_len,4);
+		UI_run(&frame_x,&frame_x_trg,10,5);		
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI实时监测界面显示
@@ -319,24 +335,72 @@ void UI_MONI(void)
 //-------------------------------------------------------------------------------------------------------------------
 void UI_CURV(void)
 {
+	uint8_t sw = 128 - 53;//曲线x范围
+	uint8_t sh = 64 - 12 - 12;//曲线y范围
+	uint8_t ox = 53;//坐标x原点
+	uint8_t oy = 12 + sh;//坐标y原点
+	
 	switch(PAGE_Select){
 		case TEMP_CURV://绘制温度曲线页面
+		{
 			u8g2_DrawUTF8(&u8g2,52,12,"温度:");
 			u8g2_DrawStr(&u8g2, 85, 12, sTemp);
 			u8g2_DrawUTF8(&u8g2,110,12,"℃");
+			float Temp_Max = 35;//绘制上限
+			float Temp_Min = 25;//绘制下限
+			float dh = sh / (Temp_Max - Temp_Min);
+			//温度阈值Temp_stand
+			for (uint8_t i = 0; i < MAX_DATALEN ; i += 6)
+				u8g2_DrawHLine(&u8g2, ox + i, oy - (Temp_stand - Temp_Min) * dh , 3);//绘制温度阈值线
+			for (uint8_t i = 0; i < cTemp && i < MAX_DATALEN ; i++)
+				u8g2_DrawPixel(&u8g2 , ox + i, oy - (vTemp[i] - Temp_Min) * dh);//绘制温度点
 			break;
+		}		
 		case PITCH_CURV://绘制俯仰角曲线页面
-			u8g2_DrawUTF8(&u8g2,52,12,"俯仰角:");		
+		{
+			u8g2_DrawUTF8(&u8g2,52,12,"俯仰角:");	
+			u8g2_DrawStr(&u8g2, 93, 12, FAX);
+			float Pitch_Max = 90;//绘制上限
+			float Pitch_Min = -90;//绘制下限
+			float dh = sh / (Pitch_Max - Pitch_Min);	
+			u8g2_DrawHLine(&u8g2, ox, oy + Pitch_Min * dh , sw);//绘制0°线
+			for (uint8_t i = 0; i < cPitch && i < MAX_DATALEN ; i++)
+				u8g2_DrawPixel(&u8g2 , ox + i, oy - (vPitch[i] - Pitch_Min) * dh);//绘制俯仰角点
 			break;
+		}
 		case ROLL_CURV://绘制横滚角曲线页面
+		{
 			u8g2_DrawUTF8(&u8g2,52,12,"横滚角:");
+			u8g2_DrawStr(&u8g2, 93, 12, FAY);
+			float Roll_Max = 90;//绘制上限
+			float Roll_Min = -90;//绘制下限
+			float dh = sh / (Roll_Max - Roll_Min);
+			u8g2_DrawHLine(&u8g2, ox, oy + Roll_Min * dh , sw);//绘制0°线
+			for (uint8_t i = 0; i < cRoll && i < MAX_DATALEN ; i++)
+				u8g2_DrawPixel(&u8g2 , ox + i, oy - (vRoll[i] - Roll_Min) * dh);//绘制横滚角点
 			break;
+		}		
 		case YAW_CURV://绘制航向角曲线页面
+		{
 			u8g2_DrawUTF8(&u8g2,52,12,"航向角:");
+			u8g2_DrawStr(&u8g2, 93, 12, FAZ);
+			float Yaw_Max = 180;//绘制上限
+			float Yaw_Min = -180;//绘制下限
+			float dh = sh / (Yaw_Max - Yaw_Min);
+			u8g2_DrawHLine(&u8g2, ox, oy + Yaw_Min * dh , sw);//绘制0°线
+			for (uint8_t i = 0; i < cYaw && i < MAX_DATALEN ; i++)
+				u8g2_DrawPixel(&u8g2 , ox + i, oy - (vYaw[i] - Yaw_Min) * dh);//绘制航向角点
 			break;
+		}
 		case THREE_DIM://绘制3D立体图页面
+		{
 			u8g2_DrawUTF8(&u8g2,52,12,"3D立体图");
+			ox = (52 + 128) /2;
+			oy = (14 + 58) /2;
+			RateCube(fAY, -fAX, fAZ,ox,oy);
 			break;
+		}
+
 	}
 }
 //-------------------------------------------------------------------------------------------------------------------
@@ -430,7 +494,7 @@ void UI_key(void)
 						break;
 				}
 			}
-		  break;
+		  	break;
 		case KEY_SUB:
 			if(UI_Select != GUI_LOGO && UI_Select != GUI_PARA)//非启动界面和参数设置界面右滑
 			{
@@ -469,6 +533,11 @@ void UI_key(void)
 				logo_tick=0;
 				led_tick=0;
 				start_beep=1;		
+			}
+			else if(UI_Select == GUI_CURV)//切换陀螺仪读取速度50 1000
+			{
+				if(mpu_gap == 0)mpu_gap = 1000;
+				else mpu_gap = 0;
 			}
 			else if(UI_Select == GUI_PARA)
 			{
@@ -528,4 +597,26 @@ int PID(int Targrt, int Now, Pid_Error *Obj)
     x += velocity;
     Obj->last_error = Obj->error;
     return x;
+}
+//-------------------------------------------------------------------------------------------------------------------
+//  @brief      画点函数
+//  @param      x
+//  @param      y
+//  @return     void
+//  Sample usage:GUI_Point(1,2);
+//-------------------------------------------------------------------------------------------------------------------
+void GUI_Point(int16_t x,int16_t y)
+{
+	u8g2_DrawPixel(&u8g2,x,y);
+}
+//-------------------------------------------------------------------------------------------------------------------
+//  @brief      画线函数
+//  @param      x1 x2
+//  @param      y1 y2
+//  @return     void
+//  Sample usage:GUI_Line(1,2,3,4);
+//-------------------------------------------------------------------------------------------------------------------
+void GUI_Line(int16_t x1,int16_t y1,int16_t x2,int16_t y2)
+{
+	u8g2_DrawLine(&u8g2,x1,y1,x2,y2);
 }

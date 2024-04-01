@@ -10,6 +10,7 @@
 #include "stdio.h"
 #include "MPU6050.h"
 #include <stdlib.h>
+#include <string.h>
 
 uint16_t beep_tick=0;
 uint8_t Show_Sec=30;//秒
@@ -21,6 +22,9 @@ uint32_t alarm_tick = 0;
 uint32_t alarm_i = 0;
 uint32_t alarm_fre = 800;
 uint8_t alarm_step = 0;
+uint32_t tem_gaptick= 0;
+uint32_t mpu_gaptick= 0;
+uint32_t TEMPER_tick= 0;
 
 uint16_t fire_music[]=
 {
@@ -45,7 +49,7 @@ void Information_Update(void)
 		//陀螺仪数据更新
 		MPU_6050data();
 		//温度报警判断
-		if(Temp>Temp_stand && Temp < 80 && Temp_state==0 )//小于80防止温度第一次初始化异常报警
+		if(Temp > Temp_stand && Temp < 80 && Temp_state==0 )//小于80防止温度第一次初始化异常报警
 		{
 			Temp_state = 1;
 			warntick = osKernelGetTickCount();
@@ -69,18 +73,52 @@ void Information_Update(void)
 //-------------------------------------------------------------------------------------------------------------------
 void MPU_6050data(void)
 {
-		uint32_t MPU_cnt=osKernelGetTickCount();
-		if(MPU_cnt>=MPU_tick){
-			MPU_tick=MPU_cnt+50;//50毫秒时间间隔
-			if(mpuok)
-				MPU_getdata();
+	uint32_t MPU_cnt=osKernelGetTickCount();
+	if(MPU_cnt >= MPU_tick)
+	{
+		MPU_tick = MPU_cnt + 50;//50毫秒时间间隔			
+		MPU_getdata();
+		if(osKernelGetTickCount() > mpu_gaptick + mpu_gap)
+		{
+			mpu_gaptick = osKernelGetTickCount();
 			sprintf(Ax, "%d", ax);	
 			sprintf(Ay, "%d", ay);
 			sprintf(Az, "%d", az);	
 			sprintf(Gx, "%d", gx);	
 			sprintf(Gy, "%d", gy);	
 			sprintf(Gz, "%d", gz);
-		} 
+			sprintf(FAX, "%.1f°", fAX);
+			sprintf(FAY, "%.1f°", fAY);
+			sprintf(FAZ, "%.1f°", fAZ);
+			if(cPitch < MAX_DATALEN)//俯仰角数据保存
+			{
+				vPitch[cPitch++] = fAX;
+			}
+			else
+			{
+				memcpy((void *)vPitch, (void *)(vPitch + 1), sizeof(vPitch[0]) * (MAX_DATALEN - 1));
+				vPitch[MAX_DATALEN - 1] = fAX;
+			}
+			if(cRoll < MAX_DATALEN)//横滚角数据保存
+			{
+				vRoll[cRoll++] = fAY;
+			}
+			else
+			{
+				memcpy((void *)vRoll, (void *)(vRoll + 1), sizeof(vRoll[0]) * (MAX_DATALEN - 1));
+				vRoll[MAX_DATALEN - 1] = fAY;
+			}
+			if(cYaw < MAX_DATALEN)//航向角数据保存
+			{	    
+				vYaw[cYaw++] = fAZ;				
+			}
+			else
+			{		    
+				memcpy((void *)vYaw, (void *)(vYaw + 1), sizeof(vYaw[0]) * (MAX_DATALEN - 1));
+				vYaw[MAX_DATALEN - 1] = fAZ;
+			}
+		}
+	} 
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      每隔一秒读取温度值
@@ -90,11 +128,32 @@ void MPU_6050data(void)
 //-------------------------------------------------------------------------------------------------------------------
 void DS18B20_TEMP(void)
 {
-		uint32_t TEMP_cnt=osKernelGetTickCount();
-		if(TEMP_cnt>=TEMP_tick){
-			TEMP_tick=TEMP_cnt+1000;//1秒时间间隔
-		  Temp=ds18b20_read();//读取传感器温度数据
-			sprintf(sTemp, "%.1f", Temp);			
+		uint32_t TEMP_cnt = osKernelGetTickCount();
+		if(TEMP_cnt >= TEMP_tick){
+			TEMP_tick = TEMP_cnt+ 50;//50毫秒进入时间间隔
+			if(osKernelGetTickCount() > TEMPER_tick + 1000)//1S读取时间间隔
+			{
+				TEMPER_tick = osKernelGetTickCount();
+				float ft = ds18b20_read();//读取传感器温度数据
+				if(ft < 125)//正常温度读取状态
+				{
+					Temp = ft;
+					sprintf(sTemp, "%.1f", Temp);//温度数据串口打印		
+				}	  	
+			}		
+			if(osKernelGetTickCount() > tem_gaptick + mpu_gap)//记录间隔
+			{
+				tem_gaptick = osKernelGetTickCount();
+				if(cTemp < MAX_DATALEN)//温度数据保存
+				{
+				    vTemp[cTemp++] = Temp;
+				}
+				else
+				{
+					memcpy((void *)vTemp, (void *)(vTemp + 1), sizeof(vTemp[0]) * (MAX_DATALEN - 1));
+					vTemp[MAX_DATALEN - 1] = Temp;
+				}
+			}							
 		} 
 }
 //-------------------------------------------------------------------------------------------------------------------

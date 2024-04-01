@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Drivers\Hardware\DEVICE;..\Drivers\Hardware\STM32_SHOW;..\Drivers\Hardware\u8g2;..\Drivers\Hardware\MPU6050</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Drivers/Hardware/DEVICE;../Drivers/Hardware/STM32_SHOW;../Drivers/Hardware/u8g2;../Drivers/Hardware/MPU6050</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -863,6 +863,21 @@
               <FileName>UI.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Drivers\Hardware\STM32_SHOW\UI.h</FilePath>
+            </File>
+            <File>
+              <FileName>3D_Rotateapplication.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\Hardware\DEVICE\3D_Rotateapplication.c</FilePath>
+            </File>
+            <File>
+              <FileName>Display_3D.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Drivers\Hardware\DEVICE\Display_3D.h</FilePath>
+            </File>
+            <File>
+              <FileName>Transform_3D.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\Hardware\DEVICE\Transform_3D.c</FilePath>
             </File>
           </Files>
         </Group>

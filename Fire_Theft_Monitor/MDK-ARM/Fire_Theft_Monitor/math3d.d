@@ -1,5 +1,5 @@
-fire_theft_monitor/ui.o: ..\Drivers\Hardware\STM32_SHOW\UI.c \
-  ..\Drivers\Hardware\STM32_SHOW\UI.h ..\Core\Inc\main.h \
+fire_theft_monitor/math3d.o: ..\Drivers\Hardware\DEVICE\Math3D.c \
+  ..\Drivers\Hardware\DEVICE\Math3D.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -32,26 +32,8 @@ fire_theft_monitor/ui.o: ..\Drivers\Hardware\STM32_SHOW\UI.c \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  ..\Drivers\Hardware\DEVICE\MathSin.h \
+  ..\Drivers\Hardware\STM32_SHOW\UI.h ..\Core\Inc\main.h \
   ..\Drivers\Hardware\DEVICE\Device.h \
-  ..\Drivers\Hardware\DEVICE\DS_18B20.h ..\Drivers\Hardware\u8g2\u8g2.h \
-  ..\Drivers\Hardware\u8g2\u8x8.h \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdarg.h \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\limits.h \
-  ..\Drivers\Hardware\STM32_SHOW\stm32_u8g2.h ..\Core\Inc\gpio.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
-  ..\Core\Inc\FreeRTOSConfig.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\deprecated_definitions.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM4F\portmacro.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  ..\Drivers\Hardware\MPU6050\MPU6050.h \
-  ..\Drivers\Hardware\MPU6050\inv_mpu.h \
-  ..\Drivers\Hardware\MPU6050\inv_mpu_dmp_motion_driver.h \
-  ..\Drivers\Hardware\MPU6050\STM32_I2C.h \
-  ..\Drivers\Hardware\DEVICE\Display_3D.h
+  ..\Drivers\Hardware\DEVICE\DS_18B20.h

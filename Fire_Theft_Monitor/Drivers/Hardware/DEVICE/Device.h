@@ -16,6 +16,7 @@
 #define KEY6 0X20
 #define KEYCNT 2
 
+#define MAX_DATALEN 75 //X = 53 --> 128
 
 #define   L1     262-1//低调 do 的频率
 #define   L2     294-1//低调 re 的频率

@@ -81,6 +81,8 @@
 "fire_theft_monitor\ds_18b20.o"
 "fire_theft_monitor\stm32_u8g2.o"
 "fire_theft_monitor\ui.o"
+"fire_theft_monitor\3d_rotateapplication.o"
+"fire_theft_monitor\transform_3d.o"
 "fire_theft_monitor\inv_mpu.o"
 "fire_theft_monitor\inv_mpu_dmp_motion_driver.o"
 "fire_theft_monitor\mpu6050.o"

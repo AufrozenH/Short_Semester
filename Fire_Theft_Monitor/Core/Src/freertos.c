@@ -75,7 +75,7 @@ const osThreadAttr_t UartTask_attributes = {
 osThreadId_t GUITaskHandle;
 const osThreadAttr_t GUITask_attributes = {
   .name = "GUITask",
-  .stack_size = 256 * 4,
+  .stack_size = 1024 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for DataTask */
@@ -161,7 +161,7 @@ void MX_FREERTOS_Init(void) {
 void StartMainTask(void *argument)
 {
   /* USER CODE BEGIN StartMainTask */
-  while(!mpuok){osDelay(1);}//等待mpu6050初始化?
+  while(!mpuok){osDelay(1);}//等待mpu6050初始�??
   /* Infinite loop */
   for(;;)
   {
@@ -181,7 +181,7 @@ void StartMainTask(void *argument)
 void StartKeyTask(void *argument)
 {
   /* USER CODE BEGIN StartKeyTask */
-	while(!mpuok){osDelay(1);}//等待mpu6050初始化?
+	while(!mpuok){osDelay(1);}//等待mpu6050初始�?
   /* Infinite loop */
   for(;;)
   {
@@ -221,7 +221,7 @@ void StartGUITask(void *argument)
 {
   /* USER CODE BEGIN StartGUITask */
 	UI_Init();
-	while(!mpuok){osDelay(1);}//等待mpu6050初始化?
+	while(!mpuok){osDelay(1);}//等待mpu6050初始�??
   /* Infinite loop */
   for(;;)
   {
