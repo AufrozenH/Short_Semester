@@ -54,7 +54,7 @@ void Information_Update(void)
 			Temp_state = 1;
 			warntick = osKernelGetTickCount();
 		}	
-		else if(((abs(gx) + abs(gy)  + abs(gz)) > ((10 -Shock_sens) * 1000 )) && Shock_state == 0 )//震动报警判断
+		else if(((abs(gx) + abs(gy)  + abs(gz)) > ((10 -Shock_sens) * 1000 )) && Shock_state == 0 && Shock_sens != 0)//震动报警判断
 		{
 			if(++warncnt >= 3)
 			{

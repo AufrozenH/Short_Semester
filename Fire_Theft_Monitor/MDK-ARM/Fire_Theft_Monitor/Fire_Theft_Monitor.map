@@ -9230,16 +9230,16 @@ Image Symbol Table
     I2C_WaitAck                              0x080034f5   Thumb Code   232  stm32_i2c.o(.text.I2C_WaitAck)
     [Anonymous Symbol]                       0x080034f4   Section        0  stm32_i2c.o(.text.I2C_WaitAck)
     [Anonymous Symbol]                       0x080035dc   Section        0  device.o(.text.Information_Update)
-    [Anonymous Symbol]                       0x080036ec   Section        0  ui.o(.text.LOGO_state)
-    [Anonymous Symbol]                       0x08003770   Section        0  device.o(.text.MPU_6050data)
-    [Anonymous Symbol]                       0x08003978   Section        0  mpu6050.o(.text.MPU_getdata)
-    [Anonymous Symbol]                       0x08003b6c   Section        0  mpu6050.o(.text.MPU_init)
-    [Anonymous Symbol]                       0x08003d2c   Section        0  freertos.o(.text.MX_FREERTOS_Init)
-    [Anonymous Symbol]                       0x08003db0   Section        0  gpio.o(.text.MX_GPIO_Init)
-    [Anonymous Symbol]                       0x08003f0c   Section        0  tim.o(.text.MX_TIM3_Init)
-    [Anonymous Symbol]                       0x08004010   Section        0  usart.o(.text.MX_USART1_UART_Init)
-    [Anonymous Symbol]                       0x0800404c   Section        0  stm32f4xx_it.o(.text.MemManage_Handler)
-    [Anonymous Symbol]                       0x08004050   Section        0  stm32f4xx_it.o(.text.NMI_Handler)
+    [Anonymous Symbol]                       0x080036f0   Section        0  ui.o(.text.LOGO_state)
+    [Anonymous Symbol]                       0x08003774   Section        0  device.o(.text.MPU_6050data)
+    [Anonymous Symbol]                       0x08003980   Section        0  mpu6050.o(.text.MPU_getdata)
+    [Anonymous Symbol]                       0x08003b74   Section        0  mpu6050.o(.text.MPU_init)
+    [Anonymous Symbol]                       0x08003d34   Section        0  freertos.o(.text.MX_FREERTOS_Init)
+    [Anonymous Symbol]                       0x08003db8   Section        0  gpio.o(.text.MX_GPIO_Init)
+    [Anonymous Symbol]                       0x08003f14   Section        0  tim.o(.text.MX_TIM3_Init)
+    [Anonymous Symbol]                       0x08004018   Section        0  usart.o(.text.MX_USART1_UART_Init)
+    [Anonymous Symbol]                       0x08004054   Section        0  stm32f4xx_it.o(.text.MemManage_Handler)
+    [Anonymous Symbol]                       0x08004058   Section        0  stm32f4xx_it.o(.text.NMI_Handler)
     [Anonymous Symbol]                       0x08004060   Section        0  port.o(.text.PendSV_Handler)
     pxCurrentTCBConst                        0x080040c0   Number         0  port.o(.text.PendSV_Handler)
     [Anonymous Symbol]                       0x080040c4   Section        0  transform_3d.o(.text.PerProject)
@@ -10015,17 +10015,17 @@ Image Symbol Table
     HAL_UART_MspInit                         0x08002f05   Thumb Code   108  usart.o(.text.HAL_UART_MspInit)
     HAL_UART_Transmit                        0x08002f71   Thumb Code   646  stm32f4xx_hal_uart.o(.text.HAL_UART_Transmit)
     HardFault_Handler                        0x080031f9   Thumb Code     2  stm32f4xx_it.o(.text.HardFault_Handler)
-    Information_Update                       0x080035dd   Thumb Code   272  device.o(.text.Information_Update)
-    LOGO_state                               0x080036ed   Thumb Code   130  ui.o(.text.LOGO_state)
-    MPU_6050data                             0x08003771   Thumb Code   518  device.o(.text.MPU_6050data)
-    MPU_getdata                              0x08003979   Thumb Code   500  mpu6050.o(.text.MPU_getdata)
-    MPU_init                                 0x08003b6d   Thumb Code   328  mpu6050.o(.text.MPU_init)
-    MX_FREERTOS_Init                         0x08003d2d   Thumb Code   132  freertos.o(.text.MX_FREERTOS_Init)
-    MX_GPIO_Init                             0x08003db1   Thumb Code   348  gpio.o(.text.MX_GPIO_Init)
-    MX_TIM3_Init                             0x08003f0d   Thumb Code   258  tim.o(.text.MX_TIM3_Init)
-    MX_USART1_UART_Init                      0x08004011   Thumb Code    60  usart.o(.text.MX_USART1_UART_Init)
-    MemManage_Handler                        0x0800404d   Thumb Code     2  stm32f4xx_it.o(.text.MemManage_Handler)
-    NMI_Handler                              0x08004051   Thumb Code     2  stm32f4xx_it.o(.text.NMI_Handler)
+    Information_Update                       0x080035dd   Thumb Code   276  device.o(.text.Information_Update)
+    LOGO_state                               0x080036f1   Thumb Code   130  ui.o(.text.LOGO_state)
+    MPU_6050data                             0x08003775   Thumb Code   518  device.o(.text.MPU_6050data)
+    MPU_getdata                              0x08003981   Thumb Code   500  mpu6050.o(.text.MPU_getdata)
+    MPU_init                                 0x08003b75   Thumb Code   328  mpu6050.o(.text.MPU_init)
+    MX_FREERTOS_Init                         0x08003d35   Thumb Code   132  freertos.o(.text.MX_FREERTOS_Init)
+    MX_GPIO_Init                             0x08003db9   Thumb Code   348  gpio.o(.text.MX_GPIO_Init)
+    MX_TIM3_Init                             0x08003f15   Thumb Code   258  tim.o(.text.MX_TIM3_Init)
+    MX_USART1_UART_Init                      0x08004019   Thumb Code    60  usart.o(.text.MX_USART1_UART_Init)
+    MemManage_Handler                        0x08004055   Thumb Code     2  stm32f4xx_it.o(.text.MemManage_Handler)
+    NMI_Handler                              0x08004059   Thumb Code     2  stm32f4xx_it.o(.text.NMI_Handler)
     PendSV_Handler                           0x08004061   Thumb Code   100  port.o(.text.PendSV_Handler)
     PerProject                               0x080040c5   Thumb Code    96  transform_3d.o(.text.PerProject)
     RateCube                                 0x08004125   Thumb Code   676  3d_rotateapplication.o(.text.RateCube)
@@ -10603,22 +10603,22 @@ Memory Map of the image
     0x080033ec   0x080033ec   0x00000106   Code   RO         5094    .text.I2C_Stop      stm32_i2c.o
     0x080034f2   0x080034f2   0x00000002   PAD
     0x080034f4   0x080034f4   0x000000e8   Code   RO         5092    .text.I2C_WaitAck   stm32_i2c.o
-    0x080035dc   0x080035dc   0x00000110   Code   RO         4703    .text.Information_Update  device.o
-    0x080036ec   0x080036ec   0x00000082   Code   RO         4792    .text.LOGO_state    ui.o
-    0x0800376e   0x0800376e   0x00000002   PAD
-    0x08003770   0x08003770   0x00000206   Code   RO         4707    .text.MPU_6050data  device.o
-    0x08003976   0x08003976   0x00000002   PAD
-    0x08003978   0x08003978   0x000001f4   Code   RO         5069    .text.MPU_getdata   mpu6050.o
-    0x08003b6c   0x08003b6c   0x000001c0   Code   RO         5063    .text.MPU_init      mpu6050.o
-    0x08003d2c   0x08003d2c   0x00000084   Code   RO           37    .text.MX_FREERTOS_Init  freertos.o
-    0x08003db0   0x08003db0   0x0000015c   Code   RO           28    .text.MX_GPIO_Init  gpio.o
-    0x08003f0c   0x08003f0c   0x00000102   Code   RO           63    .text.MX_TIM3_Init  tim.o
-    0x0800400e   0x0800400e   0x00000002   PAD
-    0x08004010   0x08004010   0x0000003c   Code   RO           82    .text.MX_USART1_UART_Init  usart.o
-    0x0800404c   0x0800404c   0x00000002   Code   RO          102    .text.MemManage_Handler  stm32f4xx_it.o
-    0x0800404e   0x0800404e   0x00000002   PAD
-    0x08004050   0x08004050   0x00000002   Code   RO           98    .text.NMI_Handler   stm32f4xx_it.o
-    0x08004052   0x08004052   0x0000000e   PAD
+    0x080035dc   0x080035dc   0x00000114   Code   RO         4703    .text.Information_Update  device.o
+    0x080036f0   0x080036f0   0x00000082   Code   RO         4792    .text.LOGO_state    ui.o
+    0x08003772   0x08003772   0x00000002   PAD
+    0x08003774   0x08003774   0x00000206   Code   RO         4707    .text.MPU_6050data  device.o
+    0x0800397a   0x0800397a   0x00000006   PAD
+    0x08003980   0x08003980   0x000001f4   Code   RO         5069    .text.MPU_getdata   mpu6050.o
+    0x08003b74   0x08003b74   0x000001c0   Code   RO         5063    .text.MPU_init      mpu6050.o
+    0x08003d34   0x08003d34   0x00000084   Code   RO           37    .text.MX_FREERTOS_Init  freertos.o
+    0x08003db8   0x08003db8   0x0000015c   Code   RO           28    .text.MX_GPIO_Init  gpio.o
+    0x08003f14   0x08003f14   0x00000102   Code   RO           63    .text.MX_TIM3_Init  tim.o
+    0x08004016   0x08004016   0x00000002   PAD
+    0x08004018   0x08004018   0x0000003c   Code   RO           82    .text.MX_USART1_UART_Init  usart.o
+    0x08004054   0x08004054   0x00000002   Code   RO          102    .text.MemManage_Handler  stm32f4xx_it.o
+    0x08004056   0x08004056   0x00000002   PAD
+    0x08004058   0x08004058   0x00000002   Code   RO           98    .text.NMI_Handler   stm32f4xx_it.o
+    0x0800405a   0x0800405a   0x00000006   PAD
     0x08004060   0x08004060   0x00000064   Code   RO         1530    .text.PendSV_Handler  port.o
     0x080040c4   0x080040c4   0x00000060   Code   RO         4878    .text.PerProject    transform_3d.o
     0x08004124   0x08004124   0x000002a4   Code   RO         4842    .text.RateCube      3d_rotateapplication.o
@@ -11067,7 +11067,7 @@ Image component sizes
 
        676          4          0          0          0      15448   3d_rotateapplication.o
        406          0          0          0       1724      44614   cmsis_os2.o
-      2814         80         10         28         44      11148   device.o
+      2818         80         10         28         44      11148   device.o
       1508          8          0          0          0       6829   ds_18b20.o
        300          0        223          0         20       3644   freertos.o
        348          0          0          0          0       2322   gpio.o
@@ -11123,7 +11123,7 @@ Image component sizes
     ----------------------------------------------------------------------
      47900       1162     300544        240      37912     732703   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-       244          0          7          0         18          0   (incl. Padding)
+       240          0          7          0         18          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
