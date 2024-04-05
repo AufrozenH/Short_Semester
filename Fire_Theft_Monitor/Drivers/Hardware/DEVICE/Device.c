@@ -54,7 +54,7 @@ void Information_Update(void)
 			Temp_state = 1;
 			warntick = osKernelGetTickCount();
 		}	
-		else if(((abs(gx) + abs(gy)  + abs(gz)) > ((10 -Shock_sens) * 1000 )) && Shock_state == 0 && Shock_sens != 0)//震动报警判断
+		else if(((abs(gx) + abs(gy)  + abs(gz)) > ((10 -Shock_sens) * 1000 )) && Shock_state == 0 && Shock_sens != 0)//震动报警判断（震动灵敏度非0）
 		{
 			if(++warncnt >= 3)
 			{
@@ -218,7 +218,7 @@ void Alarm_beep(uint8_t state)
 	HAL_TIM_Base_Start_IT(&htim3);
 	uint32_t alarm_cnt = osKernelGetTickCount();
 	
-	if(state == 1)//温度报警
+	if(state == 1 && Alarm_time > 0)//温度报警（报警时长非0）
 	{
 		if(alarm_cnt >= alarm_tick)
 		{
@@ -241,7 +241,7 @@ void Alarm_beep(uint8_t state)
 			HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_1);
 		}
 	}
-	else if(state == 2)//震动报警
+	else if(state == 2 && Alarm_time > 0)//震动报警（报警时长非0）
 	{
 		if(alarm_cnt >= alarm_tick)
 		{
