@@ -336,7 +336,7 @@ void UI_MONI(void)
 void UI_CURV(void)
 {
 	uint8_t sw = 128 - 53;//曲线x范围
-	uint8_t sh = 64 - 12 - 12;//曲线y范围
+	uint8_t sh = 64 - 14 - 14;//曲线y范围
 	uint8_t ox = 53;//坐标x原点
 	uint8_t oy = 12 + sh;//坐标y原点
 	
