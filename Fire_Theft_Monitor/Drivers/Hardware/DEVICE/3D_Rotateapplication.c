@@ -49,9 +49,9 @@ _3Dzuobiao const Cube[8]=		//const 相当于51 中的code，表示存放在rom�
   {8,8,0},
     
   {1,1,8},
-	{7,1,8},	//只这是正方体特征点坐标,相当于正方形的边长，可以增加一个函数来修改长短，以及9变成长方形或其他的
-	{1,7,8},	//后面有些参数没有单独剥离出来，所以此处修改后，有些地方可能也要相应修改。请实际操作进行修改。
-	{7,7,8}	//在arduino的游戏机中看到过有画三维旋转飞机的，原理上应该一样，将飞机的各个点存起来，区别就是画线的顺序。
+  {7,1,8},	//只这是正方体特征点坐标,相当于正方形的边长，可以增加一个函数来修改长短，以及9变成长方形或其他的
+  {1,7,8},	//后面有些参数没有单独剥离出来，所以此处修改后，有些地方可能也要相应修改。请实际操作进行修改。
+  {7,7,8}	//在arduino的游戏机中看到过有画三维旋转飞机的，原理上应该一样，将飞机的各个点存起来，区别就是画线的顺序。
 				//所以以后可以剥离出来按照点顺序来连接画线的函数，就可以画任意的图像了。等以后画掌机了再修改吧 2017-2-5
 };
 
@@ -406,34 +406,34 @@ void Rotatecircle(float ax,float ay,float az,uint16_t r,uint16_t XO,uint16_t YO)
 	Translate3D(gMAT,0,0,0);			//平移变换矩阵	
 //	XO=120;													//中心坐标
 //	YO=150 ;
-		for(i=0;i<	r+r+1;i++)
-		{				
-			Point0.x=i;
-			Point0.y=r-sqrt(r*r-(r-i)*(r-i));
-			Point0.z=0;
-			Point3.x=i;
-			Point3.y=r+sqrt(r*r-(r-i)*(r-i));
-			Point3.z=0;
-			
-			Point1=vector_matrix_MULTIPLY(Point0,gMAT);	//矢量与矩阵相乘
-			//	Translate3D(gMAT,30,30,60); //平移变换矩阵	
-			
-			PointDis=PerProject(Point1,XO,YO);					//映射投影
-			 //PointDis=OrtProject(Point1);
-			PointDis.x+=OLED_X_MAX;
-			PointDis.y+=OLED_Y_MAX;//用来解决超出屏幕后乱码的问题。去掉后顺时针转到超出左边界后会找不到坐标无限划线，
-									//加上屏幕的宽度就解决了，按照说明书，宽度显存为240，高度为432（虽然像素为400个），
-									//	还要注意图像不要大到超过两个屏
-			GUI_Point(PointDis.x,PointDis.y);
-			
-			Point1=vector_matrix_MULTIPLY(Point3,gMAT);	//矢量与矩阵相乘
-				//Translate3D(gMAT,30,30,60); //平移变换矩阵	
-			PointDis=PerProject(Point1,XO,YO);					//映射投影
-			 //PointDis=OrtProject(Point3);
-			PointDis.x+=OLED_X_MAX;
-			PointDis.y+=OLED_Y_MAX;//用来解决超出屏幕后乱码的问题。去掉后顺时针转到超出左边界后会找不到坐标无限划线，
-			PointDis.x%=OLED_X_MAX;			//加上屏幕的宽度就解决了，按照说明书，宽度显存为240，高度为432（虽然像素为400个），
-			PointDis.y%=OLED_Y_MAX;			//	还要注意图像不要大到超过两个屏
-			GUI_Point(PointDis.x,PointDis.y);                         
-		}			
+	for(i=0;i<	r+r+1;i++)
+	{				
+		Point0.x=i;
+		Point0.y=r-sqrt(r*r-(r-i)*(r-i));
+		Point0.z=0;
+		Point3.x=i;
+		Point3.y=r+sqrt(r*r-(r-i)*(r-i));
+		Point3.z=0;
+		
+		Point1=vector_matrix_MULTIPLY(Point0,gMAT);	//矢量与矩阵相乘
+		//	Translate3D(gMAT,30,30,60); //平移变换矩阵	
+		
+		PointDis=PerProject(Point1,XO,YO);					//映射投影
+			//PointDis=OrtProject(Point1);
+		PointDis.x+=OLED_X_MAX;
+		PointDis.y+=OLED_Y_MAX;//用来解决超出屏幕后乱码的问题。去掉后顺时针转到超出左边界后会找不到坐标无限划线，
+								//加上屏幕的宽度就解决了，按照说明书，宽度显存为240，高度为432（虽然像素为400个），
+								//	还要注意图像不要大到超过两个屏
+		GUI_Point(PointDis.x,PointDis.y);
+		
+		Point1=vector_matrix_MULTIPLY(Point3,gMAT);	//矢量与矩阵相乘
+			//Translate3D(gMAT,30,30,60); //平移变换矩阵	
+		PointDis=PerProject(Point1,XO,YO);					//映射投影
+			//PointDis=OrtProject(Point3);
+		PointDis.x+=OLED_X_MAX;
+		PointDis.y+=OLED_Y_MAX;//用来解决超出屏幕后乱码的问题。去掉后顺时针转到超出左边界后会找不到坐标无限划线，
+		PointDis.x%=OLED_X_MAX;			//加上屏幕的宽度就解决了，按照说明书，宽度显存为240，高度为432（虽然像素为400个），
+		PointDis.y%=OLED_Y_MAX;			//	还要注意图像不要大到超过两个屏
+		GUI_Point(PointDis.x,PointDis.y);                         
+	}			
 }
