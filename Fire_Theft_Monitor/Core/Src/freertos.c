@@ -161,7 +161,8 @@ void MX_FREERTOS_Init(void) {
 void StartMainTask(void *argument)
 {
   /* USER CODE BEGIN StartMainTask */
-  while(!mpuok){osDelay(1);}//等待mpu6050初始�??
+  //等待mpu6050初始化
+  while(!mpuok){osDelay(1);}
   /* Infinite loop */
   for(;;)
   {
@@ -181,7 +182,8 @@ void StartMainTask(void *argument)
 void StartKeyTask(void *argument)
 {
   /* USER CODE BEGIN StartKeyTask */
-	while(!mpuok){osDelay(1);}//等待mpu6050初始�?
+  //等待mpu6050初始化
+	while(!mpuok){osDelay(1);}
   /* Infinite loop */
   for(;;)
   {
@@ -221,7 +223,8 @@ void StartGUITask(void *argument)
 {
   /* USER CODE BEGIN StartGUITask */
 	UI_Init();
-	while(!mpuok){osDelay(1);}//等待mpu6050初始�??
+  //等待mpu6050初始化
+	while(!mpuok){osDelay(1);}
   /* Infinite loop */
   for(;;)
   {

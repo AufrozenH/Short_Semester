@@ -147,43 +147,43 @@ void UI_Show(void)
 //-------------------------------------------------------------------------------------------------------------------
 void LOGO_state(void)
 {
-		if(osKernelGetTickCount()>=led_tick + 500)
-		{						
-			//LED灯闪烁
-			leds_sta = ~leds_sta;
-			led_tick=osKernelGetTickCount();
+	if(osKernelGetTickCount()>=led_tick + 500)
+	{						
+		//LED灯闪烁
+		leds_sta = ~leds_sta;
+		led_tick=osKernelGetTickCount();
+	}
+	
+	if(0==logo_tick)
+		logo_tick=osKernelGetTickCount();//开始进入界面时，记录时间戳
+	else
+	{
+		if(osKernelGetTickCount() <= logo_tick + 2000)
+		{
+			//显示选题名称
+			LOGO_Select = LOGO_TITLE;
 		}
-		
-		if(0==logo_tick)
-			logo_tick=osKernelGetTickCount();//开始进入界面时，记录时间戳
+		else if(osKernelGetTickCount() <= logo_tick + 5000)
+		{
+			//显示学号姓名
+			LOGO_Select = NUM_NAME;
+		}
+		else if(osKernelGetTickCount() <= logo_tick+8000)
+		{
+			//显示组内成员大头照
+			LOGO_Select = PEO_PIC;
+		}
 		else
 		{
-			if(osKernelGetTickCount() <= logo_tick + 2000)
-			{
-				//显示选题名称
-				LOGO_Select = LOGO_TITLE;
-			}
-			else if(osKernelGetTickCount() <= logo_tick + 5000)
-			{
-				//显示学号姓名
-				LOGO_Select = NUM_NAME;
-			}
-			else if(osKernelGetTickCount() <= logo_tick+8000)
-			{
-				//显示组内成员大头照
-				LOGO_Select = PEO_PIC;
-			}
-			else
-			{
-				UI_Select = GUI_MONI;               //logo界面状态跳转到主菜单界面
-				//logo界面常规初始化预备
-				LOGO_Select = LOGO_TITLE;
-				leds_sta = 0x00;					
-				logo_tick=0;
-				led_tick=0;
-				start_beep=1;
-			}
+			UI_Select = GUI_MONI;               //logo界面状态跳转到主菜单界面
+			//logo界面常规初始化预备
+			LOGO_Select = LOGO_TITLE;
+			leds_sta = 0x00;					
+			logo_tick=0;
+			led_tick=0;
+			start_beep=1;
 		}
+	}
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI初始界面显示
@@ -193,30 +193,30 @@ void LOGO_state(void)
 //-------------------------------------------------------------------------------------------------------------------
 void UI_logo(void)
 {
-		u8g2_SetFont(&u8g2,u8g2_font_wqy16_t_gb2312b); //设置启动界面字体
-		u8g2_ClearBuffer(&u8g2);  
-		switch(LOGO_Select){
-			case LOGO_TITLE:
-				//显示选题名称
-				u8g2_DrawUTF8(&u8g2,31,15,"专业实践");	
-				u8g2_DrawUTF8(&u8g2,23,35,"综合设计Ⅱ");
-				u8g2_DrawUTF8(&u8g2,7,55,"防火防盗监测器");		
-				break;
-			case NUM_NAME:
-				//显示学号姓名
-				u8g2_DrawUTF8(&u8g2,0,15,"成员1：王子豪");	
-				u8g2_DrawUTF8(&u8g2,55,30,"21041428");
-				u8g2_DrawUTF8(&u8g2,0,45,"成员2：杨佳翰");	
-				u8g2_DrawUTF8(&u8g2,55,60,"21041432");
-				break;
-			case PEO_PIC:
-				//显示组内成员大头照                                                                                                                                                                                                            
-				u8g2_DrawXBMP(&u8g2,2,0,60,60,wzhbmp); //成员wzh
-				u8g2_DrawLine(&u8g2,63, 0, 63, 63);    //画分割线
-				u8g2_DrawXBMP(&u8g2,65,0,60,60,yjhbmp);//成员yjh
-				break;	
-		}
-		u8g2_SendBuffer(&u8g2);
+	u8g2_SetFont(&u8g2,u8g2_font_wqy16_t_gb2312b); //设置启动界面字体
+	u8g2_ClearBuffer(&u8g2);  
+	switch(LOGO_Select){
+		case LOGO_TITLE:
+			//显示选题名称
+			u8g2_DrawUTF8(&u8g2,31,15,"专业实践");	
+			u8g2_DrawUTF8(&u8g2,23,35,"综合设计Ⅱ");
+			u8g2_DrawUTF8(&u8g2,7,55,"防火防盗监测器");		
+			break;
+		case NUM_NAME:
+			//显示学号姓名
+			u8g2_DrawUTF8(&u8g2,0,15,"成员1：王子豪");	
+			u8g2_DrawUTF8(&u8g2,55,30,"21041428");
+			u8g2_DrawUTF8(&u8g2,0,45,"成员2：杨佳翰");	
+			u8g2_DrawUTF8(&u8g2,55,60,"21041432");
+			break;
+		case PEO_PIC:
+			//显示组内成员大头照                                                                                                                                                                                                            
+			u8g2_DrawXBMP(&u8g2,2,0,60,60,wzhbmp); //成员wzh
+			u8g2_DrawLine(&u8g2,63, 0, 63, 63);    //画分割线
+			u8g2_DrawXBMP(&u8g2,65,0,60,60,yjhbmp);//成员yjh
+			break;	
+	}
+	u8g2_SendBuffer(&u8g2);
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI主菜单界面显示
@@ -257,22 +257,22 @@ void UI_menu(void)
 //-------------------------------------------------------------------------------------------------------------------
 void UI_page(void)
 {
-		u8g2_SetFont(&u8g2,u8g2_font_wqy12_t_gb2312b); //设置字体
-		
-		//绘制具体子页面
-		switch(UI_Select){
-			case GUI_MONI:{UI_MONI();break;}
-			case GUI_PARA:{UI_PARA();break;}
-			case GUI_CURV:{UI_CURV();break;}						
-		}
-		//绘制滑动页面框
-		uint8_t frame_len =(128-53)/list[UI_Select-1].page;
-	  	if(PAGE_Select==list[UI_Select-1].page-1)frame_x_trg=127-frame_len;
-		else frame_x_trg=52+frame_len*PAGE_Select;
-		//切换显示
-		if(mpu_gap == 1000)u8g2_DrawRFrame(&u8g2,frame_x,60,frame_len,4,1);
-		else u8g2_DrawFrame(&u8g2,frame_x,60,frame_len,4);
-		UI_run(&frame_x,&frame_x_trg,10,5);		
+	u8g2_SetFont(&u8g2,u8g2_font_wqy12_t_gb2312b); //设置字体
+	
+	//绘制具体子页面
+	switch(UI_Select){
+		case GUI_MONI:{UI_MONI();break;}
+		case GUI_PARA:{UI_PARA();break;}
+		case GUI_CURV:{UI_CURV();break;}						
+	}
+	//绘制滑动页面框
+	uint8_t frame_len =(128-53)/list[UI_Select-1].page;
+	if(PAGE_Select==list[UI_Select-1].page-1)frame_x_trg=127-frame_len;
+	else frame_x_trg=52+frame_len*PAGE_Select;
+	//切换显示
+	if(mpu_gap == 1000)u8g2_DrawRFrame(&u8g2,frame_x,60,frame_len,4,1);
+	else u8g2_DrawFrame(&u8g2,frame_x,60,frame_len,4);
+	UI_run(&frame_x,&frame_x_trg,10,5);		
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI实时监测界面显示
@@ -411,40 +411,40 @@ void UI_CURV(void)
 //-------------------------------------------------------------------------------------------------------------------
 void UI_PARA(void)
 {
-		for(int i = 0;i < 4 ; i++)
-		{
-			u8g2_DrawUTF8(&u8g2,52,(i+1)*15-2,Para[i].str);//显示可设置参数名称		
-		}
-		//显示温度上限值
-		char strTemp[5];	//定义温度上限值数组
-		sprintf(strTemp, "%d", Temp_stand);
-		u8g2_DrawStr(&u8g2, 104, 13, strTemp);
-		u8g2_DrawUTF8(&u8g2,117,13,"℃");
-		//显示震动灵敏度
-		char strSHOCK[5];	//定义震动灵敏度数组
-		sprintf(strSHOCK, "%d", Shock_sens);
-		u8g2_DrawStr(&u8g2, 118, 28, strSHOCK);
-		//显示报警时长
-		char strALARM[5];	//定义报警时长数组
-		sprintf(strALARM, "%d", Alarm_time);
-		u8g2_DrawStr(&u8g2, 108, 43, strALARM);
-		u8g2_DrawUTF8(&u8g2,122,43,"S");
-		//显示上传间隔
-		char strUPLOAD[6];	//定义上传间隔数组
-		if(Upload_inter<10)sprintf(strUPLOAD, "%.1f", Upload_inter);
-		else sprintf(strUPLOAD, "%.0f", Upload_inter);	
-		u8g2_DrawStr(&u8g2, 104, 58, strUPLOAD);
-		u8g2_DrawUTF8(&u8g2,122,58,"S");
-		//丝滑选择框显示
-		
-		para_y_trg=PARA_Select*15+2;
-		para_y = PID(para_y_trg, para_y, &PARA_Line);
-		para_x_trg=128-Para[PARA_Select].len;
-    	para_x = PID(para_x_trg, para_x, &PARA_Wide);
-				
-		u8g2_SetDrawColor(&u8g2,2);
-		u8g2_DrawRBox(&u8g2,para_x,para_y,Para[PARA_Select].len,14,0);//显示选择框	
-		u8g2_SetDrawColor(&u8g2,1);
+	for(int i = 0;i < 4 ; i++)
+	{
+		u8g2_DrawUTF8(&u8g2,52,(i+1)*15-2,Para[i].str);//显示可设置参数名称		
+	}
+	//显示温度上限值
+	char strTemp[5];	//定义温度上限值数组
+	sprintf(strTemp, "%d", Temp_stand);
+	u8g2_DrawStr(&u8g2, 104, 13, strTemp);
+	u8g2_DrawUTF8(&u8g2,117,13,"℃");
+	//显示震动灵敏度
+	char strSHOCK[5];	//定义震动灵敏度数组
+	sprintf(strSHOCK, "%d", Shock_sens);
+	u8g2_DrawStr(&u8g2, 118, 28, strSHOCK);
+	//显示报警时长
+	char strALARM[5];	//定义报警时长数组
+	sprintf(strALARM, "%d", Alarm_time);
+	u8g2_DrawStr(&u8g2, 108, 43, strALARM);
+	u8g2_DrawUTF8(&u8g2,122,43,"S");
+	//显示上传间隔
+	char strUPLOAD[6];	//定义上传间隔数组
+	if(Upload_inter<10)sprintf(strUPLOAD, "%.1f", Upload_inter);
+	else sprintf(strUPLOAD, "%.0f", Upload_inter);	
+	u8g2_DrawStr(&u8g2, 104, 58, strUPLOAD);
+	u8g2_DrawUTF8(&u8g2,122,58,"S");
+	//丝滑选择框显示
+	
+	para_y_trg=PARA_Select*15+2;
+	para_y = PID(para_y_trg, para_y, &PARA_Line);
+	para_x_trg=128-Para[PARA_Select].len;
+	para_x = PID(para_x_trg, para_x, &PARA_Wide);
+			
+	u8g2_SetDrawColor(&u8g2,2);
+	u8g2_DrawRBox(&u8g2,para_x,para_y,Para[PARA_Select].len,14,0);//显示选择框	
+	u8g2_SetDrawColor(&u8g2,1);
 
 }
 //-------------------------------------------------------------------------------------------------------------------
