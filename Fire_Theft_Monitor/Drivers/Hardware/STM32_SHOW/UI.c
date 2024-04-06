@@ -210,7 +210,7 @@ void UI_logo(void)
 				u8g2_DrawUTF8(&u8g2,55,60,"21041432");
 				break;
 			case PEO_PIC:
-				//显示组内成员大头照
+				//显示组内成员大头照                                                                                                                                                                                                            
 				u8g2_DrawXBMP(&u8g2,2,0,60,60,wzhbmp); //成员wzh
 				u8g2_DrawLine(&u8g2,63, 0, 63, 63);    //画分割线
 				u8g2_DrawXBMP(&u8g2,65,0,60,60,yjhbmp);//成员yjh
