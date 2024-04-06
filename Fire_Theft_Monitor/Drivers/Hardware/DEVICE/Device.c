@@ -49,7 +49,7 @@ void Information_Update(void)
 		//陀螺仪数据更新
 		MPU_6050data();
 		//温度报警判断
-		if(Temp > Temp_stand && Temp < 80 && Temp_state==0 )//小于80防止温度第一次初始化异常报警
+		if(Temp > Temp_stand && Temp < 80 &&  Temp_state==0 )//小于80防止温度第一次初始化异常报警
 		{
 			Temp_state = 1;
 			warntick = osKernelGetTickCount();
