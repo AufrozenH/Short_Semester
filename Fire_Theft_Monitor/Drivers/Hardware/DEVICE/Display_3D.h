@@ -59,7 +59,6 @@ typedef struct
 	float y;
 	float z;
 }_3Dzuobiao;
-
 /*****************************************************/
 //3D-transform.c 部分
 //“变换算法”和“投影算法”
@@ -71,15 +70,12 @@ void structure_3D(float MAT[4][4]);//构造单位矩阵
 void Translate3D(float MAT[4][4],int16_t tx,int16_t ty,int16_t tz);//平移变换矩阵
 void  Scale_3D(float MAT[4][4],float sx,float sy,float sz);//比例变换矩阵
 void Rotate_3D(float MAT[4][4],float ax,float ay,float az);//旋转变换矩阵
-
-
 /*****************************************************/
 //3D-transform.c部分
 //		投影算法	三维转二维的相关函数		
 /****************************************************/
 _2Dzuobiao OrtProject(_3Dzuobiao Space);//正射投影（Orthographic projection）
 _2Dzuobiao	PerProject(_3Dzuobiao Space,int16_t  XO,int16_t  YO);//透视投影（Perspective projection?
-
 /*****************************************************/
 //3D_Rotateapplitation.c 部分
 //“变换矩阵算法”和“投影算法”的应用

@@ -25,8 +25,6 @@
 *******************************************************************************/
 #include <math.h>
 #include <Display_3D.h>
-//#include <common.h>
-//#include"Transform_3D.h"
 
 /**********************************************************/
 //**函数：MATRIX_copy
@@ -43,12 +41,11 @@ void MATRIX_copy(float sourceMAT[4][4],float targetMAT[4][4])
 	for(a=0;a<4;a++)
 	{
 		for(b=0;b<4;b++)
-			{
-				targetMAT[a][b]=sourceMAT[a][b];
-			}
+		{
+			targetMAT[a][b]=sourceMAT[a][b];
+		}
 	}
 }
-
 /**********************************************************/
 ///**函数：MATRIX_multiply
 ///**功能：矩阵相乘
@@ -58,7 +55,6 @@ void MATRIX_copy(float sourceMAT[4][4],float targetMAT[4][4])
 //**作者：  执念执战
 ///**时间：2015-11-29
 /***********************************************************/
-
 void MATRIX_multiply(float MAT1[4][4],float MAT2[4][4],float newMAT[4][4])
 {
 	uint8_t a,b;
@@ -67,7 +63,6 @@ void MATRIX_multiply(float MAT1[4][4],float MAT2[4][4],float newMAT[4][4])
 			newMAT[a][b]=MAT1[a][0]*MAT2[0][b]+MAT1[a][1]*MAT2[1][b]+MAT1[a][2]*MAT2[2][b]+MAT1[a][3]*MAT2[3][b];
 				
 }
-
 ///**********************************************************/
 ///**函数: vector_matrix_MULTIPLY
 ///**功能：矢量与矩阵相乘
@@ -76,9 +71,6 @@ void MATRIX_multiply(float MAT1[4][4],float MAT2[4][4],float newMAT[4][4])
 //**作者：  执念执战
 ///**时间：2015-11-29
 ///***********************************************************/
-
-
-
 _3Dzuobiao vector_matrix_MULTIPLY(_3Dzuobiao Source,float MAT[4][4])
 {
 	_3Dzuobiao  Result;
@@ -87,8 +79,6 @@ _3Dzuobiao vector_matrix_MULTIPLY(_3Dzuobiao Source,float MAT[4][4])
 	Result.z=Source.x*MAT[0][2]+Source.y*MAT[1][2]+Source.z*MAT[2][2]+MAT[3][2];
 	return Result;
 }
-
-
 ///**********************************************************/
 ///**函数: structure_3D
 ///**功能：构造单位矩阵
@@ -97,7 +87,6 @@ _3Dzuobiao vector_matrix_MULTIPLY(_3Dzuobiao Source,float MAT[4][4])
 //**作者：  执念执战
 ///**时间：2015-11-29
 ///***********************************************************/
-
 void structure_3D(float MAT[4][4])
 {
     MAT[0][0]=1.0;MAT[0][1]=0.0;MAT[0][2]=0.0;MAT[0][3]=0.0;// 1 0 0 0 
@@ -105,8 +94,6 @@ void structure_3D(float MAT[4][4])
     MAT[2][0]=0.0;MAT[2][1]=0.0;MAT[2][2]=1.0;MAT[2][3]=0.0;// 0 0 1 0
     MAT[3][0]=0.0;MAT[3][1]=0.0;MAT[3][2]=0.0;MAT[3][3]=1.0;// 0 0 0 1
 }
-
-
 ///**********************************************************/
 ///**函数: Translate3D
 ///**功能：平移变换矩阵
@@ -135,7 +122,6 @@ void Translate3D(float MAT[4][4],int16_t tx,int16_t ty,int16_t tz)
 	MATRIX_copy(lMAT,MAT);				//复制
 		
 }
-
 ///**********************************************************/
 ///**函数: Scale_3D
 ///**功能：比例(scale)变换矩阵
@@ -146,19 +132,17 @@ void Translate3D(float MAT[4][4],int16_t tx,int16_t ty,int16_t tz)
 //**作者：  执念执战
 ///**时间：2015-11-30,7:45
 ///***********************************************************/
-
 void  Scale_3D(float MAT[4][4],float sx,float sy,float sz)
 {
-		float lMAT[4][4];
-		float tMAT[4][4];
+	float lMAT[4][4];
+	float tMAT[4][4];
 	tMAT[0][0]=sx;  tMAT[0][1]=0;  tMAT[0][2]=0;  tMAT[0][3]=0;	//	sx0 0 0 
 	tMAT[1][0]=0;   tMAT[1][1]=sy; tMAT[1][2]=0;  tMAT[1][3]=0;	//	0 sy0 0
-    	tMAT[2][0]=0;   tMAT[2][1]=0;  tMAT[2][2]=sz; tMAT[2][3]=0;	//	0 0 sz0
-    	tMAT[3][0]=0;   tMAT[3][1]=0;  tMAT[3][2]=0;  tMAT[3][3]=1;	//	0 0 0 1
+	tMAT[2][0]=0;   tMAT[2][1]=0;  tMAT[2][2]=sz; tMAT[2][3]=0;	//	0 0 sz0
+	tMAT[3][0]=0;   tMAT[3][1]=0;  tMAT[3][2]=0;  tMAT[3][3]=1;	//	0 0 0 1
 	MATRIX_multiply(MAT,tMAT,lMAT);	//相乘
 	MATRIX_copy(lMAT,MAT);					//复制
 }
-
 ///**********************************************************/
 ///**函数: Rotate_3D
 ///**功能：旋转变换矩阵
@@ -194,31 +178,22 @@ void Rotate_3D(float MAT[4][4],float ax,float ay,float az)
 	MATy[2][0]=-sin(ay);MATy[2][1]=0;		MATy[2][2]=cos(ay);	MATy[2][3]=0;//	-sin(ay)	0		cos(ay) 0
 	MATy[3][0]=0;		MATy[3][1]=0;		MATy[3][2]=0;		MATy[3][3]=1;// 0 	0	0		1
 	
-	
 	/*****************************绕z轴旋转********************************************/
 	MATz[0][0]=cos(az);	MATz[0][1]=-sin(az);MATz[0][2]=0;	MATz[0][3]=0;//cos(az)	-sin(az)	0		0
 	MATz[1][0]=sin(az);	MATz[1][1]=cos(az);	MATz[1][2]=0;	MATz[1][3]=0;//	sin(az)	cos(az)		0		0
 	MATz[2][0]=0;		MATz[2][1]=0;		MATz[2][2]=1;	MATz[2][3]=0;//	0	  0		1		0
 	MATz[3][0]=0;		MATz[3][1]=0;		MATz[3][2]=0;	MATz[3][3]=1;// 0 	  0		0		1
 	
-		MATRIX_multiply(MAT,MATx,MAT1);	
-		MATRIX_multiply(MAT1,MATy,MAT2);	
-		MATRIX_multiply(MAT2,MATz,MAT);	
-		
-	
-	
+	MATRIX_multiply(MAT,MATx,MAT1);	
+	MATRIX_multiply(MAT1,MATy,MAT2);	
+	MATRIX_multiply(MAT2,MATz,MAT);	
+			
 }
-
-
 /********************************************************************************/
 /*------------------------------------------------------------------------------*/
 /*			投影算法	三维转二维的相关函数											*/
 /*------------------------------------------------------------------------------*/
 /********************************************************************************/
-
-
-
-
 
 ///**********************************************************/
 ///**函数: Rotate_3D
@@ -231,15 +206,12 @@ void Rotate_3D(float MAT[4][4],float ax,float ay,float az)
 ///***********************************************************/
 _2Dzuobiao OrtProject(_3Dzuobiao Space)
 {
-		_2Dzuobiao	Screen;
-		Screen.x=(int16_t)Space.x;
-		Screen.y=(int16_t)Space.y;
+	_2Dzuobiao	Screen;
+	Screen.x=(int16_t)Space.x;
+	Screen.y=(int16_t)Space.y;
 	
-	  return Screen;
-	
+	return Screen;
 }
-
-
 
 /**************************************************/
 /*基于透视投影的基本模型*/
@@ -251,8 +223,6 @@ _2Dzuobiao OrtProject(_3Dzuobiao Space)
 //int16_t  YO;
 
 //XO=120,YO=120;
-
-
 ///**********************************************************/
 ///**函数: PerProject
 ///**功能：透视投影（Perspective projection）
@@ -262,7 +232,6 @@ _2Dzuobiao OrtProject(_3Dzuobiao Space)
 //**作者：  执念执战
 ///**时间：2015-11-30
 ///***********************************************************/
-
 _2Dzuobiao	PerProject(_3Dzuobiao Space,int16_t  XO,int16_t  YO)
 {
 	_2Dzuobiao Screen;
@@ -271,7 +240,3 @@ _2Dzuobiao	PerProject(_3Dzuobiao Space,int16_t  XO,int16_t  YO)
 	Screen.y=(int16_t)(FOCAL_DISTANCE*Space.y /(Space.z+FOCAL_DISTANCE)+YO);
 	return Screen;
 }
-
-
-
-

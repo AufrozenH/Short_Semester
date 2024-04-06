@@ -43,16 +43,16 @@
 
 _3Dzuobiao const Cube[8]=		//const 相当于51 中的code，表示存放在rom中且为只读
 {																	
-  {0,0,0},
-  {8,0,0},
-  {0,8,0},
-  {8,8,0},
-    
-  {1,1,8},
-  {7,1,8},	//只这是正方体特征点坐标,相当于正方形的边长，可以增加一个函数来修改长短，以及9变成长方形或其他的
-  {1,7,8},	//后面有些参数没有单独剥离出来，所以此处修改后，有些地方可能也要相应修改。请实际操作进行修改。
-  {7,7,8}	//在arduino的游戏机中看到过有画三维旋转飞机的，原理上应该一样，将飞机的各个点存起来，区别就是画线的顺序。
-				//所以以后可以剥离出来按照点顺序来连接画线的函数，就可以画任意的图像了。等以后画掌机了再修改吧 2017-2-5
+	{0,0,0},
+	{8,0,0},
+	{0,8,0},
+	{8,8,0},
+		
+	{1,1,8},
+	{7,1,8},	//只这是正方体特征点坐标,相当于正方形的边长，可以增加一个函数来修改长短，以及9变成长方形或其他的
+	{1,7,8},	//后面有些参数没有单独剥离出来，所以此处修改后，有些地方可能也要相应修改。请实际操作进行修改。
+	{7,7,8}	//在arduino的游戏机中看到过有画三维旋转飞机的，原理上应该一样，将飞机的各个点存起来，区别就是画线的顺序。
+					//所以以后可以剥离出来按照点顺序来连接画线的函数，就可以画任意的图像了。等以后画掌机了再修改吧 2017-2-5
 };
 
 _3Dzuobiao const Triangle[3]=
@@ -76,7 +76,7 @@ _3Dzuobiao const Triangle[3]=
 
 void Rotate_cube(float ax,float ay,float az)   //旋转的立方体
 {	uint8_t i;
-		float gMAT[4][4];
+	float gMAT[4][4];
 	_3Dzuobiao temp;
 	_2Dzuobiao Cube_dis[8];
 	_2Dzuobiao Triangle_dis[3];
@@ -161,7 +161,7 @@ void RateCube(float x,float y,float z,uint16_t XO,uint16_t YO)
 					//		y：上下调动位置 ，具体根据实际修改
 	
 	for(i=0;i<8;i++)
-{
+	{
 		temp=vector_matrix_MULTIPLY(Cube[i],gMAT);	//矢量与矩阵相乘
 		Cube_dis[i]=	PerProject(temp,XO,YO);		//正射投影
 		Cube_dis[i].x+=OLED_X_MAX;
@@ -169,7 +169,7 @@ void RateCube(float x,float y,float z,uint16_t XO,uint16_t YO)
 		Cube_dis[i].x%=OLED_X_MAX;			//用来解决超出屏幕后乱码的问题。去掉后顺时针转到超出左边界后会找不到坐标无限划线，
 		Cube_dis[i].y%=OLED_Y_MAX;			//加上屏幕的宽度就解决了，按照说明书，宽度显存为240，高度为432（虽然像素为400个），
 					//	还要注意图像不要大到超过两个屏
-}
+	}
 	 GUI_Line(Cube_dis[0].x,Cube_dis[0].y,Cube_dis[1].x,Cube_dis[1].y);
 	 GUI_Line(Cube_dis[0].x,Cube_dis[0].y,Cube_dis[2].x,Cube_dis[2].y);
 	 GUI_Line(Cube_dis[3].x,Cube_dis[3].y,Cube_dis[1].x,Cube_dis[1].y);
@@ -218,38 +218,34 @@ void RateCube_all(float x,float y,float z,float mx,float my,float mz,float bx,fl
 	Translate3D(gMAT,0,0,32);	//平移变换矩阵	   x:调节距离中心点的位置，相当于下面Point0.z
 					//		   y：上下调动位置 ，具体根据实际修改
 	for(i=0;i<8;i++)
-{
+	{
 		temp=vector_matrix_MULTIPLY(Cube[i],gMAT);//矢量与矩阵相乘
 		Cube_dis[i]=	PerProject(temp,XO,YO);   //正射投影
 		Cube_dis[i].x+=OLED_X_MAX;
 		Cube_dis[i].y+=OLED_Y_MAX;	//用来解决超出屏幕后乱码的问题。去掉后顺时针转到超出左边界后会找不到坐标无限划线，
 		Cube_dis[i].x%=OLED_X_MAX;		//加上屏幕的宽度就解决了，按照说明书，宽度显存为240，高度为432（虽然像素为400个），
 		Cube_dis[i].y%=OLED_X_MAX;		//	还要注意图像不要大到超过两个屏
-}
+	}
 
 
-   GUI_Line(Cube_dis[0].x,Cube_dis[0].y,Cube_dis[1].x,Cube_dis[1].y);
-	 GUI_Line(Cube_dis[0].x,Cube_dis[0].y,Cube_dis[2].x,Cube_dis[2].y);
-	 GUI_Line(Cube_dis[3].x,Cube_dis[3].y,Cube_dis[1].x,Cube_dis[1].y);
-	 GUI_Line(Cube_dis[3].x,Cube_dis[3].y,Cube_dis[2].x,Cube_dis[2].y);
-	
-	
-	 GUI_Line(Cube_dis[0+4].x,Cube_dis[0+4].y,Cube_dis[1+4].x,Cube_dis[1+4].y);
-	 GUI_Line(Cube_dis[0+4].x,Cube_dis[0+4].y,Cube_dis[2+4].x,Cube_dis[2+4].y);
-	 GUI_Line(Cube_dis[3+4].x,Cube_dis[3+4].y,Cube_dis[1+4].x,Cube_dis[1+4].y);
-	 GUI_Line(Cube_dis[3+4].x,Cube_dis[3+4].y,Cube_dis[2+4].x,Cube_dis[2+4].y);
-	
-	
-	 GUI_Line(Cube_dis[0].x,Cube_dis[0].y,Cube_dis[0+4].x,Cube_dis[0+4].y);
-	 GUI_Line(Cube_dis[1].x,Cube_dis[1].y,Cube_dis[1+4].x,Cube_dis[1+4].y);
-	 GUI_Line(Cube_dis[2].x,Cube_dis[2].y,Cube_dis[2+4].x,Cube_dis[2+4].y);
-	 GUI_Line(Cube_dis[3].x,Cube_dis[3].y,Cube_dis[3+4].x,Cube_dis[3+4].y);
+   	GUI_Line(Cube_dis[0].x,Cube_dis[0].y,Cube_dis[1].x,Cube_dis[1].y);
+	GUI_Line(Cube_dis[0].x,Cube_dis[0].y,Cube_dis[2].x,Cube_dis[2].y);
+	GUI_Line(Cube_dis[3].x,Cube_dis[3].y,Cube_dis[1].x,Cube_dis[1].y);
+	GUI_Line(Cube_dis[3].x,Cube_dis[3].y,Cube_dis[2].x,Cube_dis[2].y);
+
+
+	GUI_Line(Cube_dis[0+4].x,Cube_dis[0+4].y,Cube_dis[1+4].x,Cube_dis[1+4].y);
+	GUI_Line(Cube_dis[0+4].x,Cube_dis[0+4].y,Cube_dis[2+4].x,Cube_dis[2+4].y);
+	GUI_Line(Cube_dis[3+4].x,Cube_dis[3+4].y,Cube_dis[1+4].x,Cube_dis[1+4].y);
+	GUI_Line(Cube_dis[3+4].x,Cube_dis[3+4].y,Cube_dis[2+4].x,Cube_dis[2+4].y);
+
+
+	GUI_Line(Cube_dis[0].x,Cube_dis[0].y,Cube_dis[0+4].x,Cube_dis[0+4].y);
+	GUI_Line(Cube_dis[1].x,Cube_dis[1].y,Cube_dis[1+4].x,Cube_dis[1+4].y);
+	GUI_Line(Cube_dis[2].x,Cube_dis[2].y,Cube_dis[2+4].x,Cube_dis[2+4].y);
+	GUI_Line(Cube_dis[3].x,Cube_dis[3].y,Cube_dis[3+4].x,Cube_dis[3+4].y);
 		
-
-
-
 }
-
 ///**********************************************************/
 ///**函数: RotatePic32x32
 ///**功能：在三维空间中旋转一个32x32的字符或图形
@@ -307,9 +303,6 @@ void RotatePic32X32(unsigned char *dp,float ax,float ay,float az,uint16_t XO,uin
 		}
 		dp+=32;
 	}
-	
-	
-	
 }
 ///**********************************************************/
 ///**函数: RotatePic32x32
@@ -324,7 +317,6 @@ void RotatePic32X32(unsigned char *dp,float ax,float ay,float az,uint16_t XO,uin
 //修改时间： 2017/5/31   1200
 //					添加原点设置的形参
 ///***********************************************************/
-
 void RotatePic29X32(unsigned char *dp,float ax,float ay,float az,uint16_t XO,uint16_t YO)
 {//取模方式为宋体，小二，常规，对应点阵为29X32，即每行取29个字节，共四行，
 //	int16_t  XO;
@@ -372,7 +364,6 @@ void RotatePic29X32(unsigned char *dp,float ax,float ay,float az,uint16_t XO,uin
 		dp+=29;						//每行29个字节
 	}
 }
-
 ///**********************************************************/
 ///**函数: Rotatecircle
 ///**功能：在三维空间中旋转一个圆形
