@@ -28,6 +28,7 @@
 #include "UI.h"
 #include <stdio.h>
 //#include "MPU6050.h"
+#include "ESP01.h"
 #include "Device.h"
 /* USER CODE END Includes */
 
@@ -166,6 +167,7 @@ void StartMainTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
+    //系统状态机控制
 		SYS_state();
     osDelay(1);
   }
@@ -187,6 +189,7 @@ void StartKeyTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
+    //通过if else间接锁定了按键，只要报警了，按键一定被锁定
 		if(Temp_state || Shock_state)Ulock();
 		else UI_key();
     osDelay(1);
@@ -207,6 +210,10 @@ void StartUartTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
+    if (EspRxDataOk())
+    {
+      // ??????
+    }
     osDelay(1);
   }
   /* USER CODE END StartUartTask */

@@ -55,6 +55,7 @@ void BeepDone(void);
 void Write595(uint8_t sel, uint8_t num, uint8_t bdot);
 void DispSeg(uint8_t num[4], uint8_t dot); 
 void Ulock(void);
+void ESP_upload_data(void);
 uint8_t Ulock_scan(void);
 uint8_t key_scan(void);
 uint8_t ScanKey(void);

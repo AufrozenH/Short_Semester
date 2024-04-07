@@ -1,7 +1,12 @@
 {
   "files.associations": {
+    "*.ino": "plaintext",
     "math.h": "c",
     "cstdlib": "c",
-    "main.h": "c"
+    "main.h": "c",
+    "esp01.h": "c",
+    "cmsis_os.h": "c",
+    "usart.h": "c",
+    "device.h": "c"
   }
 }

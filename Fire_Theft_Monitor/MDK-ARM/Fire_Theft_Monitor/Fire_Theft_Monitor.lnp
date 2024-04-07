@@ -87,6 +87,7 @@
 "fire_theft_monitor\inv_mpu_dmp_motion_driver.o"
 "fire_theft_monitor\mpu6050.o"
 "fire_theft_monitor\stm32_i2c.o"
+"fire_theft_monitor\esp01.o"
 --strict --scatter "Fire_Theft_Monitor\Fire_Theft_Monitor.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

@@ -95,7 +95,6 @@ extern char Gz[10];//记录实际陀螺仪gz数组
 extern uint8_t Temp_stand;//温度上限值0~90℃
 extern uint8_t Shock_sens;//震动灵敏度0~9级
 extern uint8_t Alarm_time;//报警时长0~60S
-extern float Upload_inter;//上传间隔100ms~10S
 extern uint8_t Temp_state;//温度报警标志位 1：温度超过阈值
 extern uint8_t Shock_state;//震动报警标志位 1：加速度超过阈值
 extern uint8_t mpuok;//mpu6050初始化状态
@@ -112,6 +111,11 @@ extern char FAX[10];//记录实际陀螺仪俯仰角数组
 extern char FAY[10];//记录实际陀螺仪横滚角数组
 extern char FAZ[10];//记录实际陀螺仪航向角数组
 extern int mpu_gap;//读取陀螺仪数值间隔时间（默认 50 可切换为1000）
+extern uint8_t g_bupting; //上传开关
+extern float Upload_inter;//上传间隔100ms~10S
+extern uint32_t up_tick; 
+extern char upstr[100]; //esp数据上报临时数组
+extern uint32_t esp01_send_cnt;//
 
 void SYS_Init(void);
 void UI_Init(void);
@@ -123,6 +127,7 @@ void UI_menu(void);
 void UI_page(void);
 void UI_MONI(void);
 void UI_CURV(void);
+void UI_COMM(void);
 void UI_PARA(void);
 void UI_key(void);
 void UI_run(short *a,short *a_trg,uint8_t step,uint8_t slow_cnt);

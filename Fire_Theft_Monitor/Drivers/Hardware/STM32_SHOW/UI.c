@@ -11,6 +11,7 @@
 #include "DS_18B20.h"
 #include "MPU6050.h"  
 #include <Display_3D.h>
+#include "ESP01.h"
 
 u8g2_t u8g2;
 
@@ -76,6 +77,11 @@ int cRoll=0;//横滚角数据缓存计数
 float vYaw[MAX_DATALEN];//航向角数据缓存
 int cYaw=0;//航向角数据缓存计数
 
+uint8_t g_bupting=0; //上传开关
+uint32_t esp01_send_cnt=0;//上传数据计数
+char upstr[100];
+
+
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      系统初始化
 //  @param      null              
@@ -93,6 +99,7 @@ void SYS_Init(void)
 		osDelay(250);
 		mpuok = MPU_init();
 	}
+	InitEsp01(&huart6);//ESP01初始化
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI初始化
@@ -113,6 +120,8 @@ void UI_Init(void)
 //-------------------------------------------------------------------------------------------------------------------
 void SYS_state(void)
 {
+	//默认就是一种初始化的UI_Select
+	//这里的状态机就是为的显示初始人物姓名的大头照
 	switch(UI_Select){
 		case GUI_LOGO:{LOGO_state();break;}
 		default :break;
@@ -125,6 +134,7 @@ void SYS_state(void)
 	Warn_Count();
 	BeepDone();
 	SetLeds(leds_sta);
+	ESP_upload_data();
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI界面显示
@@ -134,6 +144,8 @@ void SYS_state(void)
 //-------------------------------------------------------------------------------------------------------------------
 void UI_Show(void)
 {
+	//UI_Show在全流程中会被StartGUITask不断调用
+	//执行完GUI_LOGO状态后，就会进入菜单状态
 	switch(UI_Select){
 		case GUI_LOGO:{UI_logo();break;}
 		default :{UI_menu();break;}
@@ -226,28 +238,27 @@ void UI_logo(void)
 //-------------------------------------------------------------------------------------------------------------------
 void UI_menu(void)
 {
-		u8g2_SetFont(&u8g2,u8g2_font_wqy12_t_gb2312b); //设置字体
-		u8g2_ClearBuffer(&u8g2);
-		int list_len = sizeof(list)/sizeof(SETTING_LIST);
+	u8g2_SetFont(&u8g2,u8g2_font_wqy12_t_gb2312b); //设置字体
+	u8g2_ClearBuffer(&u8g2);
+	int list_len = sizeof(list)/sizeof(SETTING_LIST);
+	
+	for(int i = 0;i < list_len ; i++)
+	{
+		u8g2_DrawUTF8(&u8g2,2,(i+1)*16-4,list[i].str);//显示子菜单名称		
+	}
 		
-		for(int i = 0;i < list_len ; i++)
-		{
-			u8g2_DrawUTF8(&u8g2,2,(i+1)*16-4,list[i].str);//显示子菜单名称		
-		}
+	frame_y_trg=(UI_Select-1)*16;
+	frame_y = PID(frame_y_trg, frame_y, &Dynamic_menu);
+	
+	u8g2_SetDrawColor(&u8g2,2);
+	u8g2_DrawBox(&u8g2,0,frame_y,item_wide,16);//显示选择框	
+	u8g2_SetDrawColor(&u8g2,1);
+	
+	u8g2_DrawLine(&u8g2,0, 0, 0, 63);  //画边框左竖线
+	u8g2_DrawLine(&u8g2,50, 0, 50, 63);//画边框右竖线	
 		
-		
-	  frame_y_trg=(UI_Select-1)*16;
-		frame_y = PID(frame_y_trg, frame_y, &Dynamic_menu);
-		
-		u8g2_SetDrawColor(&u8g2,2);
-		u8g2_DrawBox(&u8g2,0,frame_y,item_wide,16);//显示选择框	
-		u8g2_SetDrawColor(&u8g2,1);
-		
-		u8g2_DrawLine(&u8g2,0, 0, 0, 63);  //画边框左竖线
-		u8g2_DrawLine(&u8g2,50, 0, 50, 63);//画边框右竖线	
-			
-		UI_page();
-		u8g2_SendBuffer(&u8g2);
+	UI_page();
+	u8g2_SendBuffer(&u8g2);
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI子页面显示
@@ -257,13 +268,13 @@ void UI_menu(void)
 //-------------------------------------------------------------------------------------------------------------------
 void UI_page(void)
 {
-	u8g2_SetFont(&u8g2,u8g2_font_wqy12_t_gb2312b); //设置字体
-	
+	u8g2_SetFont(&u8g2,u8g2_font_wqy12_t_gb2312b); //设置字体	
 	//绘制具体子页面
 	switch(UI_Select){
 		case GUI_MONI:{UI_MONI();break;}
 		case GUI_PARA:{UI_PARA();break;}
-		case GUI_CURV:{UI_CURV();break;}						
+		case GUI_CURV:{UI_CURV();break;}	
+		case GUI_COMM:{UI_COMM();break;}					
 	}
 	//绘制滑动页面框
 	uint8_t frame_len =(128-53)/list[UI_Select-1].page;
@@ -400,7 +411,39 @@ void UI_CURV(void)
 			RateCube(fAY, -fAX, fAZ,ox,oy);
 			break;
 		}
-
+	}
+}
+//-------------------------------------------------------------------------------------------------------------------
+//  @brief      UI无线通信界面显示
+//  @param      null              
+//  @return     void
+//  Sample usage:UI_COMM();
+//-------------------------------------------------------------------------------------------------------------------
+void UI_COMM(void){
+	
+	char prt_str[15];
+	switch(PAGE_Select)
+	{
+		case SERV_CONNE:
+			u8g2_SetFont(&u8g2,u8g2_font_04b_03b_tr); //设置界面字体
+			u8g2_DrawUTF8(&u8g2,52,10,"SSID:");
+			u8g2_DrawUTF8(&u8g2,52,18,g_esp01.strESPName);
+			u8g2_DrawUTF8(&u8g2,52,26,"IP:    192.168.43.33");//ip
+			u8g2_DrawUTF8(&u8g2,52,34,"PORT:  8686");//端口号
+			u8g2_SetFont(&u8g2,u8g2_font_6x12_tr); //设置界面字体
+			u8g2_DrawUTF8(&u8g2,52,44,"AP:");
+			u8g2_DrawUTF8(&u8g2,70,44,AP_NAME);
+			u8g2_SetFont(&u8g2,u8g2_font_wqy12_t_gb2312b); //设置字体
+			u8g2_DrawUTF8(&u8g2,52,56,g_esp01.bConnect==3?"OK":"ERR");
+			u8g2_DrawUTF8(&u8g2,82,56,g_bupting?"上传中":"未上传");
+			break;
+		case DATA_INF:
+			u8g2_SetFont(&u8g2,u8g2_font_ncenB08_tr); //设置界面字体
+			u8g2_DrawUTF8(&u8g2,52,10,"SEND_BYTE:");//发送字节数
+			sprintf(prt_str,"%d",esp01_send_cnt);
+			u8g2_DrawUTF8(&u8g2,52,23,prt_str);
+			u8g2_DrawUTF8(&u8g2,52,35,"RECE_BYTE:");//接收字节数
+			break;
 	}
 }
 //-------------------------------------------------------------------------------------------------------------------
@@ -437,9 +480,9 @@ void UI_PARA(void)
 	u8g2_DrawUTF8(&u8g2,122,58,"S");
 	//丝滑选择框显示
 	
-	para_y_trg=PARA_Select*15+2;
+	para_y_trg=PARA_Select*15+2; //y目标值直接无脑增
 	para_y = PID(para_y_trg, para_y, &PARA_Line);
-	para_x_trg=128-Para[PARA_Select].len;
+	para_x_trg=128-Para[PARA_Select].len; //根据不同的参数名字长度选择不同的x目标值
 	para_x = PID(para_x_trg, para_x, &PARA_Wide);
 			
 	u8g2_SetDrawColor(&u8g2,2);
@@ -459,7 +502,7 @@ void UI_key(void)
 	switch(key){
 		case KEY_UP://子菜单向上选择
 			PAGE_Select=0;//刷新子页码
-			if(UI_Select == GUI_MONI){UI_Select=GUI_PARA;break;}
+			if(UI_Select == GUI_MONI){UI_Select=GUI_PARA;break;} //循环翻页
 			else if(UI_Select == GUI_LOGO){break;}
 			else {UI_Select--;break;}
 		case KEY_DOWN://子菜单向下选择
@@ -468,7 +511,7 @@ void UI_key(void)
 			else if(UI_Select == GUI_LOGO){break;}
 			else {UI_Select++;break;}
 		case KEY_ADD:
-			if(UI_Select != GUI_LOGO&& UI_Select != GUI_PARA)//非启动界面和参数设置界面左滑
+			if(UI_Select != GUI_LOGO&& UI_Select != GUI_PARA && UI_Select!=GUI_COMM)//非启动界面和参数设置界面左滑
 			{
 				if(PAGE_Select<=0){PAGE_Select=list[UI_Select-1].page-1;}
 				else{PAGE_Select--;}				
@@ -493,6 +536,10 @@ void UI_key(void)
 						else Upload_inter += 0.1;
 						break;
 				}
+			}
+			else if(UI_Select == GUI_COMM && PAGE_Select==SERV_CONNE)
+			{
+				g_bupting=!g_bupting;//切换上传开启|关闭
 			}
 		  	break;
 		case KEY_SUB:
@@ -543,6 +590,11 @@ void UI_key(void)
 			{
 				if(PARA_Select == PARA_UPLO)PARA_Select = PARA_TEMP;
 				else PARA_Select++;
+			}
+			else if(UI_Select == GUI_COMM)
+			{
+				if(PAGE_Select==SERV_CONNE)InitEsp01(&huart6);//关闭|开启 数据上传
+				else esp01_send_cnt=0;//清空上传数据计数			
 			}
 			break;
 		case KEY_LEAVE:

@@ -51,4 +51,5 @@ fire_theft_monitor/device.o: ..\Drivers\Hardware\DEVICE\Device.c \
   ..\Drivers\Hardware\MPU6050\inv_mpu_dmp_motion_driver.h \
   ..\Drivers\Hardware\MPU6050\STM32_I2C.h \
   D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\string.h
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\string.h \
+  ..\Drivers\Hardware\ESP01\ESP01.h ..\Core\Inc\usart.h

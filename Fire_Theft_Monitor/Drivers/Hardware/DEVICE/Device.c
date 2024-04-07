@@ -11,6 +11,7 @@
 #include "MPU6050.h"
 #include <stdlib.h>
 #include <string.h>
+#include "ESP01.h"
 
 uint16_t beep_tick=0;
 uint8_t Show_Sec=30;//秒
@@ -25,15 +26,33 @@ uint8_t alarm_step = 0;
 uint32_t tem_gaptick= 0;
 uint32_t mpu_gaptick= 0;
 uint32_t TEMPER_tick= 0;
+uint32_t up_tick=0;//esp数据上传时间戳
 
-uint16_t fire_music[]=
-{
-		M6,M3,M6,M3,M6,M3,M6,M3
-};
 uint16_t shock_music[]=
 {
 	H6,H6,M3,M3,H6,H6,M3,M3,H6,H6,M3,M3
 };
+
+//-------------------------------------------------------------------------------------------------------------------
+//  @brief      ESP上传数据
+//  @param      null              
+//  @return     void
+//  Sample usage:ESP_upload_data
+//-------------------------------------------------------------------------------------------------------------------
+void ESP_upload_data(void)
+{
+	if(g_bupting)
+	{
+		if(osKernelGetTickCount()>up_tick)
+		{
+			up_tick = osKernelGetTickCount()+Upload_inter*1000;
+			sprintf(upstr,"TEMP:%5.1f, axyz:%6d %6d %6d, gxyz:%6d %6d %6d, ang:%6.1f %6.1f %6.1f\n",
+				Temp,ax,ay,az,gx,gy,gz,fAX,fAY,fAZ);
+			esp01_send_cnt+=strlen(upstr);
+			SendEspStr(upstr);
+		}
+	}
+}
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      各种数据更新以及判断
 //  @param      dat              
@@ -49,11 +68,13 @@ void Information_Update(void)
 		//陀螺仪数据更新
 		MPU_6050data();
 		//温度报警判断
-		if(Temp > Temp_stand && Temp < 80 &&  Temp_state==0 )//小于80防止温度第一次初始化异常报警
+		//Temp_stand温度上限设置
+		if(Temp > Temp_stand && Temp < 80 && Temp_state==0 )//小于80防止温度第一次初始化异常报警
 		{
 			Temp_state = 1;
 			warntick = osKernelGetTickCount();
 		}	
+		//Shock_sens报警灵敏度设置
 		else if(((abs(gx) + abs(gy)  + abs(gz)) > ((10 -Shock_sens) * 1000 )) && Shock_state == 0 && Shock_sens != 0)//震动报警判断（震动灵敏度非0）
 		{
 			if(++warncnt >= 3)
@@ -63,7 +84,7 @@ void Information_Update(void)
 			}
 		}
 		else
-				warncnt = 0;
+			warncnt = 0;
 	}		
 }
 //-------------------------------------------------------------------------------------------------------------------

@@ -34,11 +34,18 @@ extern "C" {
 
 extern UART_HandleTypeDef huart1;
 
-/* USER CODE BEGIN Private defines */
+extern UART_HandleTypeDef huart6;
 
+/* USER CODE BEGIN Private defines */
+#define RXBUF_SIZE 	512
+typedef struct {
+	uint16_t rx_len;
+	uint8_t rx_buf[RXBUF_SIZE - 2];
+} USART_RX_DATA;
 /* USER CODE END Private defines */
 
 void MX_USART1_UART_Init(void);
+void MX_USART6_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
