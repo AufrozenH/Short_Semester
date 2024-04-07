@@ -163,7 +163,6 @@ void StartMainTask(void *argument)
 {
   /* USER CODE BEGIN StartMainTask */
   //等待mpu6050初始化
-  printf("in mainTask! test2");
   while(!mpuok){osDelay(1);}
   /* Infinite loop */
   for(;;)
