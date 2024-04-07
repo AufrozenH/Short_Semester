@@ -186,7 +186,7 @@ void StartKeyTask(void *argument)
 {
   /* USER CODE BEGIN StartKeyTask */
   //等待mpu6050初始化
-  printf("in keyTask");
+  printf("in keyTask test2");
 	while(!mpuok){osDelay(1);}
   /* Infinite loop */
   for(;;)
