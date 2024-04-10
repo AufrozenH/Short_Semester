@@ -81,7 +81,7 @@ void u8g2Init(u8g2_t *u8g2)
 {
 	u8g2_Setup_ssd1306_i2c_128x64_noname_f(u8g2, U8G2_R2, u8x8_byte_sw_i2c, u8g2_gpio_and_delay_stm32);//U8G2_R0:正向显示 U8G2_R2：逆向显示
 	u8g2_InitDisplay(u8g2); 			
-  u8g2_SetPowerSave(u8g2, 0);  
+  	u8g2_SetPowerSave(u8g2, 0);  
 	u8g2_ClearBuffer(u8g2);
 }
 
@@ -127,6 +127,6 @@ void testDrawPixelToFillScreen(u8g2_t *u8g2)
       u8g2_DrawPixel(u8g2,i, j);
     }
   }
-	u8g2_SendBuffer(u8g2);
+  u8g2_SendBuffer(u8g2);
   HAL_Delay(1000);
 }
