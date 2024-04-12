@@ -46,8 +46,8 @@ void ESP_upload_data(void)
 		if(osKernelGetTickCount()>up_tick)
 		{
 			up_tick = osKernelGetTickCount()+Upload_inter*1000;
-			sprintf(upstr,"TEMP:%5.1f, axyz:%6d %6d %6d, gxyz:%6d %6d %6d, ang:%6.1f %6.1f %6.1f\n",
-				Temp,ax,ay,az,gx,gy,gz,fAX,fAY,fAZ);
+			sprintf(upstr,"TEMP:%5.1f, axyz:%6d %6d %6d, gxyz:%6d %6d %6d, ang:%6.1f %6.1f %6.1f, state:%6d %6d, param:%6d %6d %6d %6.1f\n",
+				Temp,ax,ay,az,gx,gy,gz,fAX,fAY,fAZ,Temp_state,Shock_state,Temp_stand,Shock_sens,Alarm_time,Upload_inter);
 			esp01_send_cnt+=strlen(upstr);
 			SendEspStr(upstr);
 		}

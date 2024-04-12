@@ -3,7 +3,7 @@
 <title>Static Call Graph - [Fire_Theft_Monitor\Fire_Theft_Monitor.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Fire_Theft_Monitor\Fire_Theft_Monitor.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Fri Apr 12 19:22:52 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Fri Apr 12 19:46:08 2024
 <BR><P>
 <H3>Maximum Stack Usage =        840 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1051,8 +1051,8 @@ Global Symbols
 <P><STRONG><a name="[7]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(.text.DebugMon_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[cb]"></a>ESP_upload_data</STRONG> (Thumb, 344 bytes, Stack size 104 bytes, device.o(.text.ESP_upload_data))
-<BR><BR>[Stack]<UL><LI>Max Depth = 240 + Unknown Stack Size
+<P><STRONG><a name="[cb]"></a>ESP_upload_data</STRONG> (Thumb, 428 bytes, Stack size 176 bytes, device.o(.text.ESP_upload_data))
+<BR><BR>[Stack]<UL><LI>Max Depth = 312 + Unknown Stack Size
 <LI>Call Chain = ESP_upload_data &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelGetTickCount
@@ -1687,7 +1687,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[139]"></a>SYS_state</STRONG> (Thumb, 58 bytes, Stack size 8 bytes, ui.o(.text.SYS_state))
-<BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 320 + Unknown Stack Size
 <LI>Call Chain = SYS_state &rArr; ESP_upload_data &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Warn_Count
@@ -1765,7 +1765,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.text.MX_FREERTOS_Init)
 </UL>
 <P><STRONG><a name="[62]"></a>StartMainTask</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, freertos.o(.text.StartMainTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 320 + Unknown Stack Size
 <LI>Call Chain = StartMainTask &rArr; SYS_state &rArr; ESP_upload_data &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
@@ -1852,7 +1852,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_page
 </UL>
 
-<P><STRONG><a name="[13d]"></a>UI_Init</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, ui.o(.text.UI_Init))
+<P><STRONG><a name="[13d]"></a>UI_Init</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, ui.o(.text.UI_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = UI_Init &rArr; u8g2Init &rArr; u8g2_Setup_ssd1306_i2c_128x64_noname_f &rArr; u8g2_SetupBuffer
 </UL>
 <BR>[Calls]<UL><LI><a href="#[14d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u8g2Init
@@ -1871,8 +1871,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_page
 </UL>
 
-<P><STRONG><a name="[151]"></a>UI_PARA</STRONG> (Thumb, 632 bytes, Stack size 64 bytes, ui.o(.text.UI_PARA))
-<BR><BR>[Stack]<UL><LI>Max Depth = 256 + Unknown Stack Size
+<P><STRONG><a name="[151]"></a>UI_PARA</STRONG> (Thumb, 636 bytes, Stack size 72 bytes, ui.o(.text.UI_PARA))
+<BR><BR>[Stack]<UL><LI>Max Depth = 264 + Unknown Stack Size
 <LI>Call Chain = UI_PARA &rArr; u8g2_DrawRBox &rArr; u8g2_DrawDisc &rArr; u8g2_draw_disc_section &rArr; u8g2_DrawVLine
 </UL>
 <BR>[Calls]<UL><LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u8g2_DrawRBox
@@ -1895,7 +1895,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartGUITask
 </UL>
 
-<P><STRONG><a name="[13f]"></a>UI_key</STRONG> (Thumb, 672 bytes, Stack size 16 bytes, ui.o(.text.UI_key))
+<P><STRONG><a name="[13f]"></a>UI_key</STRONG> (Thumb, 664 bytes, Stack size 16 bytes, ui.o(.text.UI_key))
 <BR><BR>[Stack]<UL><LI>Max Depth = 256 + Unknown Stack Size
 <LI>Call Chain = UI_key &rArr; InitEsp01 &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
