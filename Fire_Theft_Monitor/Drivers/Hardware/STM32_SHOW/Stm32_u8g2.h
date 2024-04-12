@@ -11,6 +11,7 @@
 /* USER CODE BEGIN Includes */
 extern const uint8_t wzhbmp[];
 extern const uint8_t yjhbmp[];
+extern const uint8_t qjybmp[];
 /* USER CODE END Includes */
  
  

@@ -7,6 +7,8 @@
     "esp01.h": "c",
     "cmsis_os.h": "c",
     "usart.h": "c",
-    "device.h": "c"
+    "device.h": "c",
+    "ui.h": "c",
+    "stm32_u8g2.h": "c"
   }
 }

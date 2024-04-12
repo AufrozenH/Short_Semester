@@ -13,6 +13,9 @@
 #include <Display_3D.h>
 #include "ESP01.h"
 
+//此宏定义为开启QJY模式，这个宏定义在
+#define QJY_MODE 1;
+
 u8g2_t u8g2;
 
 SETTING_LIST list[]=
@@ -215,17 +218,27 @@ void UI_logo(void)
 			u8g2_DrawUTF8(&u8g2,7,55,"防火防盗监测器");		
 			break;
 		case NUM_NAME:
+			#ifdef QJY_MODE
+			u8g2_DrawUTF8(&u8g2,19,17,"成员：钱俊彦");	
+			u8g2_DrawUTF8(&u8g2,35,32,"21010129");
+			#else
 			//显示学号姓名
 			u8g2_DrawUTF8(&u8g2,0,15,"成员1：王子豪");	
 			u8g2_DrawUTF8(&u8g2,55,30,"21041428");
 			u8g2_DrawUTF8(&u8g2,0,45,"成员2：杨佳翰");	
 			u8g2_DrawUTF8(&u8g2,55,60,"21041432");
+			#endif
+			
 			break;
 		case PEO_PIC:
+			#ifdef QJY_MODE
+			u8g2_DrawXBMP(&u8g2,34,0,60,60,qjybmp);//成员qjy
+			#else
 			//显示组内成员大头照                                                                                                                                                                                                            
 			u8g2_DrawXBMP(&u8g2,2,0,60,60,wzhbmp); //成员wzh
 			u8g2_DrawLine(&u8g2,63, 0, 63, 63);    //画分割线
 			u8g2_DrawXBMP(&u8g2,65,0,60,60,yjhbmp);//成员yjh
+			#endif
 			break;	
 	}
 	u8g2_SendBuffer(&u8g2);

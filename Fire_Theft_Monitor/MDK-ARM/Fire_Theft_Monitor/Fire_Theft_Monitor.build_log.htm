@@ -3,58 +3,101 @@
 <pre>
 <h1>�Vision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: ��Vision V5.38.0.0
-Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 123 Lenovo, 123, LIC=IK1BF-63HFL-FWS2N-YWRW7-Y9SMP-4JGZI
+IDE-Version: ��Vision V5.36.0.0
+Copyright (C) 2021 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: qian 22575, hangzhou dianzi university, LIC=LSNXV-P0X8T-HLPCL-0AK50-B6KJ4-51QSX
  
 Tool Versions:
-Toolchain:       MDK-ARM Plus  Version: 5.38.0.0
-Toolchain Path:  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin
-C Compiler:      ArmClang.exe V6.19
-Assembler:       Armasm.exe V6.19
-Linker/Locator:  ArmLink.exe V6.19
-Library Manager: ArmAr.exe V6.19
-Hex Converter:   FromElf.exe V6.19
-CPU DLL:         SARMCM3.DLL V5.38.0.0
-Dialog DLL:      DCM.DLL V1.17.5.0
-Target DLL:      CMSIS_AGDI.dll V1.33.15.0
-Dialog DLL:      TCM.DLL V1.56.4.0
+Toolchain:       MDK-ARM Plus  Version: 5.36.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.16
+Assembler:       Armasm.exe V6.16
+Linker/Locator:  ArmLink.exe V6.16
+Library Manager: ArmAr.exe V6.16
+Hex Converter:   FromElf.exe V6.16
+CPU DLL:         SARMCM3.DLL V5.36.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      CMSIS_AGDI.dll V1.33.0.0
+Dialog DLL:      TCM.DLL V1.53.0.0
  
 <h2>Project:</h2>
-d:\Programming_file\stm32\Short_Semester\Fire_Theft_Monitor\MDK-ARM\Fire_Theft_Monitor.uvprojx
+d:\Work\STM32\sbqrssj\wzh_short_semester\Short_Semester\Fire_Theft_Monitor\MDK-ARM\Fire_Theft_Monitor.uvprojx
 Project File Date:  04/07/2024
 
 <h2>Output:</h2>
-*** Using Compiler 'V6.19', folder: 'D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin'
+*** Using Compiler 'V6.16', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Fire_Theft_Monitor'
-compiling Stm32_u8g2.c...
+compiling freertos.c...
+../Drivers/Hardware/ESP01/ESP01.c(48): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+        printf("<CD>˳<F6>ESP01ģ<BF><E9><U+0378><B4><AB>ģʽ...\n");
+                ^~~~ ~~~~      ~~~~~~~~        ~~~~~~~~
+../Drivers/Hardware/ESP01/ESP01.c(51): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+        printf("<B2><E2><CA><D4>ESP01ģ<BF><E9><CA>Ƿ<F1><B4><E6><D4><DA>...\n");
+                ^~~~~~~~~~~~~~~~      ~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~
+../Drivers/Hardware/ESP01/ESP01.c(56): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                printf("<B9>ر<D5>ģ<BF><E9><BB><D8><CF><D4>\n");
+                        ^~~~ ~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/Hardware/ESP01/ESP01.c(58): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                printf("<B2><U+9FF4>ģ<BF><E9><B0>汾<D0><C5>Ϣ...\n");
+                        ^~~~         ~~~~~~~~~~~~  ~~~~~~~~
+../Drivers/Hardware/ESP01/ESP01.c(61): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                printf("<BF><AA><C6><F4>AP+STAģʽ\n");
+                        ^~~~~~~~~~~~~~~~
+../Drivers/Hardware/ESP01/ESP01.c(64): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                printf("<B2><E9>ѯSSID\n");
+                        ^~~~~~~~
+../Drivers/Hardware/ESP01/ESP01.c(67): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                printf("<B2><E9>ѯ<B5><B1>ǰ<C1><AC><BD>ӵ<C4><C8>ȵ<E3>\n");
+                        ^~~~~~~~ ~~~~~~~~ ~~~~~~~~~~~~ ~~~~~~~~ ~~~~
+../Drivers/Hardware/ESP01/ESP01.c(74): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                        printf("<C1><AC><BD><D3>WiFi<C8>ȵ<E3>\n");
+                                ^~~~~~~~~~~~~~~~    ~~~~ ~~~~
+../Drivers/Hardware/ESP01/ESP01.c(84): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                        printf("<B2><E9>ѯ<C9>豸IP\n");
+                                ^~~~~~~~ ~~~~
+../Drivers/Hardware/ESP01/ESP01.c(87): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                        printf("<B2><E9>ѯ<B5><B1>ǰ<C1><AC><BD>ӵ<C4>TCP<B7><FE><CE><F1><C6><F7>\n");
+                                ^~~~~~~~ ~~~~~~~~ ~~~~~~~~~~~~ ~~~~   ~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/Hardware/ESP01/ESP01.c(90): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                        printf("<C1><AC><BD><D3>Զ<B3><CC>TCP<B7><FE><CE><F1><C6><F7>...\n");
+                                ^~~~~~~~~~~~~~~~ ~~~~~~~~   ~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/Hardware/ESP01/ESP01.c(93): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                        printf("<BF><AA><C6><F4><U+0378><B4><AB>ģʽ\n");
+                                ^~~~~~~~~~~~~~~~        ~~~~~~~~
+../Drivers/Hardware/ESP01/ESP01.c(95): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                        printf("<BF><AA>ʼ<U+0378><B4><AB>\n");
+                                ^~~~~~~~         ~~~~~~~~
+13 warnings generated.
+compiling ESP01.c...
+compiling Device.c...
+compiling UI.c...
 linking...
-Program Size: Code=69582 RO-data=304522 RW-data=240 ZI-data=38744  
+Program Size: Code=70086 RO-data=304090 RW-data=240 ZI-data=38744  
 FromELF: creating hex file...
-"Fire_Theft_Monitor\Fire_Theft_Monitor.axf" - 0 Error(s), 0 Warning(s).
+"Fire_Theft_Monitor\Fire_Theft_Monitor.axf" - 0 Error(s), 13 Warning(s).
 
 <h2>Software Packages used:</h2>
 
 Package Vendor: ARM
-                http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
-                ARM.CMSIS.5.9.0
+                http://www.keil.com/pack/ARM.CMSIS.5.8.0.pack
+                ARM.CMSIS.5.8.0
                 CMSIS (Common Microcontroller Software Interface Standard)
-   * Component: CORE Version: 5.6.0
+   * Component: CORE Version: 5.5.0
 
 Package Vendor: Keil
-                https://www.keil.com/pack/Keil.STM32F4xx_DFP.2.17.1.pack
-                Keil.STM32F4xx_DFP.2.17.1
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.15.0.pack
+                Keil.STM32F4xx_DFP.2.15.0
                 STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
 
 <h2>Collection of Component include folders:</h2>
-  ./RTE/_Fire_Theft_Monitor
-  D:/ProgramFiles/Keil5/PACKS/ARM/CMSIS/5.9.0/CMSIS/Core/Include
-  D:/ProgramFiles/Keil5/PACKS/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include
+  .\RTE\_Fire_Theft_Monitor
+  C:\Users\22575\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include
+  C:\Users\22575\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
 
-   * Component: ARM::CMSIS:CORE:5.6.0
-      Include file:  CMSIS/Core/Include/tz_context.h
+   * Component: ARM::CMSIS:CORE:5.5.0
+      Include file:  CMSIS\Core\Include\tz_context.h
 Build Time Elapsed:  00:00:02
 </pre>
 </body>

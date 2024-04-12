@@ -1,7 +1,7 @@
 fire_theft_monitor/freertos.o: ..\Core\Src\freertos.c \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Core\Inc\FreeRTOSConfig.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \
@@ -20,8 +20,8 @@ fire_theft_monitor/freertos.o: ..\Core\Src\freertos.c \
   ..\Drivers\CMSIS\Include\cmsis_version.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
   ..\Drivers\CMSIS\Include\mpu_armv7.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
@@ -45,5 +45,6 @@ fire_theft_monitor/freertos.o: ..\Core\Src\freertos.c \
   ..\Drivers\Hardware\STM32_SHOW\UI.h \
   ..\Drivers\Hardware\DEVICE\Device.h \
   ..\Drivers\Hardware\DEVICE\DS_18B20.h \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  ..\Drivers\Hardware\ESP01\ESP01.h ..\Core\Inc\usart.h
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  ..\Drivers\Hardware\ESP01\ESP01.h ..\Core\Inc\usart.h \
+  ..\Core\Inc\main.h
