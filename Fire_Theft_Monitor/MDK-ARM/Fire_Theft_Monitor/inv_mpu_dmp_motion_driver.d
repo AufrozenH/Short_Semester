@@ -7,16 +7,16 @@ fire_theft_monitor/inv_mpu_dmp_motion_driver.o: \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h \
   ..\Drivers\CMSIS\Include\core_cm4.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Drivers\CMSIS\Include\cmsis_version.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
   ..\Drivers\CMSIS\Include\mpu_armv7.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio_ex.h \
@@ -32,12 +32,12 @@ fire_theft_monitor/inv_mpu_dmp_motion_driver.o: \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\math.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\string.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\math.h \
   ..\Drivers\Hardware\MPU6050\inv_mpu.h \
   ..\Drivers\Hardware\MPU6050\inv_mpu_dmp_motion_driver.h \
   ..\Drivers\Hardware\MPU6050\dmpKey.h \
   ..\Drivers\Hardware\MPU6050\dmpmap.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\Time.h
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\Time.h
