@@ -9,6 +9,9 @@
     "usart.h": "c",
     "device.h": "c",
     "ui.h": "c",
-    "stm32_u8g2.h": "c"
+    "stm32_u8g2.h": "c",
+    "spi.h": "c",
+    "tim.h": "c",
+    "gpio.h": "c"
   }
 }

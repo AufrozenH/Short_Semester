@@ -13,8 +13,10 @@
 #include <Display_3D.h>
 #include "ESP01.h"
 
-//此宏定义为开启QJY模式，这个宏定义在
+//此宏定义为开启QJY模式，如需显示wzh信息，请取消注释
 #define QJY_MODE 1;
+//此宏定义为开启WiFi，如需开启WiFi，请取消注释此宏定义
+//#define WIFI_MODE 1;
 
 u8g2_t u8g2;
 
@@ -82,7 +84,7 @@ int cYaw=0;//航向角数据缓存计数
 
 uint8_t g_bupting=0; //上传开关
 uint32_t esp01_send_cnt=0;//上传数据计数
-char upstr[100];
+char upstr[145];
 
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -102,7 +104,9 @@ void SYS_Init(void)
 		osDelay(250);
 		mpuok = MPU_init();
 	}
-	InitEsp01(&huart6);//ESP01初始化
+	#ifdef WIFI_MODE
+		InitEsp01(&huart6);//ESP01初始化
+	#endif
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI初始化
@@ -137,7 +141,9 @@ void SYS_state(void)
 	Warn_Count();
 	BeepDone();
 	SetLeds(leds_sta);
+#ifdef WIFI_MODE
 	ESP_upload_data();
+#endif
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI界面显示

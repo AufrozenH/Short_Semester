@@ -114,7 +114,7 @@ extern int mpu_gap;//读取陀螺仪数值间隔时间（默认 50 可切换为1
 extern uint8_t g_bupting; //上传开关
 extern float Upload_inter;//上传间隔100ms~10S
 extern uint32_t up_tick; 
-extern char upstr[100]; //esp数据上报临时数组
+extern char upstr[145]; //esp数据上报临时数组
 extern uint32_t esp01_send_cnt;//
 
 void SYS_Init(void);

@@ -1,4 +1,8 @@
-*** Using Compiler 'V6.19', folder: 'D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin'
+*** Using Compiler 'V6.16', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Fire_Theft_Monitor'
+compiling UI.c...
+linking...
+Program Size: Code=61382 RO-data=304078 RW-data=252 ZI-data=38756  
+FromELF: creating hex file...
 "Fire_Theft_Monitor\Fire_Theft_Monitor.axf" - 0 Error(s), 0 Warning(s).
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
