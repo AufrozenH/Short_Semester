@@ -83,6 +83,14 @@ typedef struct
 	uint8_t page;
 }SETTING_LIST;
 
+typedef struct
+{
+	uint8_t Temp_stand;
+	uint8_t Shock_sens;
+	uint8_t Alarm_time;
+	float Upload_inter;
+}PARA_SYS;
+
 extern char UI_Select;//初始选择启动界面
 extern float Temp;//实际温度值
 extern char sTemp[5];//记录实际温度数组
@@ -92,9 +100,6 @@ extern char Az[10];//记录实际陀螺仪az数组
 extern char Gx[10];//记录实际陀螺仪gx数组
 extern char Gy[10];//记录实际陀螺仪gy数组
 extern char Gz[10];//记录实际陀螺仪gz数组
-extern uint8_t Temp_stand;//温度上限值0~90℃
-extern uint8_t Shock_sens;//震动灵敏度0~9级
-extern uint8_t Alarm_time;//报警时长0~60S
 extern uint8_t Temp_state;//温度报警标志位 1：温度超过阈值
 extern uint8_t Shock_state;//震动报警标志位 1：加速度超过阈值
 extern uint8_t mpuok;//mpu6050初始化状态
@@ -112,10 +117,10 @@ extern char FAY[10];//记录实际陀螺仪横滚角数组
 extern char FAZ[10];//记录实际陀螺仪航向角数组
 extern int mpu_gap;//读取陀螺仪数值间隔时间（默认 50 可切换为1000）
 extern uint8_t g_bupting; //上传开关
-extern float Upload_inter;//上传间隔100ms~10S
 extern uint32_t up_tick; 
 extern char upstr[145]; //esp数据上报临时数组
-extern uint32_t esp01_send_cnt;//
+extern uint32_t esp01_send_cnt;
+extern PARA_SYS sys_set;
 
 void SYS_Init(void);
 void UI_Init(void);

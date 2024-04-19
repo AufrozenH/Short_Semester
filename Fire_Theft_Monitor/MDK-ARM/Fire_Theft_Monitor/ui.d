@@ -58,4 +58,6 @@ fire_theft_monitor/ui.o: ..\Drivers\Hardware\STM32_SHOW\UI.c \
   ..\Drivers\Hardware\MPU6050\inv_mpu_dmp_motion_driver.h \
   ..\Drivers\Hardware\MPU6050\STM32_I2C.h \
   ..\Drivers\Hardware\DEVICE\Display_3D.h \
-  ..\Drivers\Hardware\ESP01\ESP01.h ..\Core\Inc\usart.h
+  ..\Drivers\Hardware\ESP01\ESP01.h ..\Core\Inc\usart.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
+  ..\Drivers\Hardware\DEVICE\W25QXX.h

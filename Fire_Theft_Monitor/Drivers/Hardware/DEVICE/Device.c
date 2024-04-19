@@ -45,11 +45,9 @@ void ESP_upload_data(void)
 	{
 		if(osKernelGetTickCount()>up_tick)
 		{
-			up_tick = osKernelGetTickCount()+Upload_inter*1000;
+			up_tick = osKernelGetTickCount()+sys_set.Upload_inter*1000;
 			sprintf(upstr,"TEMP:%5.1f, axyz:%6d,%6d,%6d, gxyz:%6d,%6d%6d, ang:%6.1f,%6.1f,%6.1f,state:%6d,%6d,param:%6d,%6d,%6d,%6.1f\n",
-			Temp,ax,ay,az,gx,gy,gz,fAX,fAY,fAZ,Temp_state,Shock_state,Temp_stand,Shock_sens,Alarm_time,Upload_inter);
-			// sprintf(upstr,"TEMP:%5.1f, axyz:%6d %6d %6d, gxyz:%6d %6d %6d, ang:%6.1f %6.1f %6.1f, state:%6d %6d, param:%6d %6d %6d %6.1f\n",
-			// 	Temp,ax,ay,az,gx,gy,gz,fAX,fAY,fAZ,Temp_state,Shock_state,Temp_stand,Shock_sens,Alarm_time,Upload_inter);
+			Temp,ax,ay,az,gx,gy,gz,fAX,fAY,fAZ,Temp_state,Shock_state,sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
 			esp01_send_cnt+=strlen(upstr);
 			SendEspStr(upstr);
 		}
@@ -70,14 +68,14 @@ void Information_Update(void)
 		//陀螺仪数据更新
 		MPU_6050data();
 		//温度报警判断
-		//Temp_stand温度上限设置
-		if(Temp > Temp_stand && Temp < 80 && Temp_state==0 )//小于80防止温度第一次初始化异常报警
+		//温度上限设置
+		if(Temp > sys_set.Temp_stand && Temp < 80 && Temp_state==0 )//小于80防止温度第一次初始化异常报警
 		{
 			Temp_state = 1;
 			warntick = osKernelGetTickCount();
 		}	
 		//Shock_sens报警灵敏度设置
-		else if(((abs(gx) + abs(gy)  + abs(gz)) > ((10 -Shock_sens) * 1000 )) && Shock_state == 0 && Shock_sens != 0)//震动报警判断（震动灵敏度非0）
+		else if(((abs(gx) + abs(gy)  + abs(gz)) > ((10 -sys_set.Shock_sens) * 1000 )) && Shock_state == 0 && sys_set.Shock_sens != 0)//震动报警判断（震动灵敏度非0）
 		{
 			if(++warncnt >= 3)
 			{
@@ -189,7 +187,7 @@ void Warn_Count(void)
 {
 	if(Temp_state || Shock_state)
 	{
-		if(osKernelGetTickCount() >= warntick + Alarm_time*1000)//报警结束清空各种标志位
+		if(osKernelGetTickCount() >= warntick + sys_set.Alarm_time*1000)//报警结束清空各种标志位
 		{
 			Temp_state = Shock_state = 0;
 			alarm_tick = 0;
@@ -200,7 +198,7 @@ void Warn_Count(void)
 		}				
 		else
 		{
-			uint32_t tic = warntick + Alarm_time*1000 - osKernelGetTickCount();
+			uint32_t tic = warntick + sys_set.Alarm_time*1000 - osKernelGetTickCount();
 			num[0] = (tic/10000)%10;
 			num[1] = (tic/1000)%10;
 			num[2] = (tic/100)%10;
@@ -241,7 +239,7 @@ void Alarm_beep(uint8_t state)
 	HAL_TIM_Base_Start_IT(&htim3);
 	uint32_t alarm_cnt = osKernelGetTickCount();
 	
-	if(state == 1 && Alarm_time > 0)//温度报警（报警时长非0）
+	if(state == 1 && sys_set.Alarm_time > 0)//温度报警（报警时长非0）
 	{
 		if(alarm_cnt >= alarm_tick)
 		{
@@ -264,7 +262,7 @@ void Alarm_beep(uint8_t state)
 			HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_1);
 		}
 	}
-	else if(state == 2 && Alarm_time > 0)//震动报警（报警时长非0）
+	else if(state == 2 && sys_set.Alarm_time > 0)//震动报警（报警时长非0）
 	{
 		if(alarm_cnt >= alarm_tick)
 		{
