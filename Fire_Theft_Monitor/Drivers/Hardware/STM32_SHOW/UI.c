@@ -12,9 +12,13 @@
 #include "MPU6050.h"  
 #include <Display_3D.h>
 #include "ESP01.h"
+#include "string.h"
+#include "W25QXX.h"
 
-//此宏定义为开启QJY模式，这个宏定义在
+//此宏定义为开启QJY模式，如需显示wzh信息，请取消注释
 #define QJY_MODE 1;
+//此宏定义为开启WiFi，如需开启WiFi，请取消注释此宏定义
+//#define WIFI_MODE 1;
 
 u8g2_t u8g2;
 
@@ -33,6 +37,12 @@ SETTING_LIST Para[]=
 	{"上传间隔:",26,1},
 };
 
+//温度上限值0~90℃
+//震动灵敏度0~9级
+//报警时长0~60S
+//上传间隔100ms~10S
+PARA_SYS sys_set={30,0,30,0.1};
+
 Pid_Error Dynamic_menu = {450, 300, 200, 0, 0, 0};//动态菜单选择效果pid
 Pid_Error PARA_Line = {450, 300, 200, 0, 0, 0}, PARA_Wide = {400, 200, 150, 0, 0, 0};//动态参数选择效果pid
 
@@ -45,10 +55,6 @@ short frame_y,frame_y_trg;//选择框目前y值，选择框目标y值
 short frame_x,frame_x_trg;//滑动框目前x值，滑动框目标x值
 short para_y,para_y_trg;//参数框目前y值，参数框目标y值
 short para_x,para_x_trg;//参数框目前x值，参数框目标x值
-uint8_t Temp_stand=30;//温度上限值0~90℃
-uint8_t Shock_sens=0;//震动灵敏度0~9级
-uint8_t Alarm_time=30;//报警时长0~60S
-float Upload_inter=0.1;//上传间隔100ms~10S
 float Temp=0;//实际温度值
 char sTemp[5];//记录实际温度数组
 char Ax[10];//记录实际陀螺仪ax数组
@@ -82,7 +88,7 @@ int cYaw=0;//航向角数据缓存计数
 
 uint8_t g_bupting=0; //上传开关
 uint32_t esp01_send_cnt=0;//上传数据计数
-char upstr[100];
+char upstr[145];
 
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -93,8 +99,19 @@ char upstr[100];
 //-------------------------------------------------------------------------------------------------------------------
 void SYS_Init(void)
 {
+	static PARA_SYS tmp_sys_set;
+
 	osDelay(1000);
 	ds18b20_init();//温度传感器初始化
+	W25QXX_Init();//W25QXX初始化
+	W25QXX_Read((uint8_t *)&tmp_sys_set,0,sizeof(tmp_sys_set));
+	if((tmp_sys_set.Temp_stand>=0 && tmp_sys_set.Temp_stand<=90) &&
+		(tmp_sys_set.Shock_sens>=0 && tmp_sys_set.Shock_sens<=9) &&
+		(tmp_sys_set.Alarm_time>=0 && tmp_sys_set.Alarm_time<=60) &&
+		(tmp_sys_set.Upload_inter>=0.1 && tmp_sys_set.Upload_inter<=10)){
+			printf("Load: %d℃, %d, %d秒, %.1f毫秒",sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
+			memcpy(&sys_set,&tmp_sys_set,sizeof(tmp_sys_set));
+		}
 	mpuok = MPU_init();//MPU6050初始化
 	uint8_t cnt = 0;
 	while(cnt++ < 3 && !mpuok)
@@ -102,7 +119,9 @@ void SYS_Init(void)
 		osDelay(250);
 		mpuok = MPU_init();
 	}
-	InitEsp01(&huart6);//ESP01初始化
+	#ifdef WIFI_MODE
+		InitEsp01(&huart6);//ESP01初始化
+	#endif
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI初始化
@@ -137,7 +156,9 @@ void SYS_state(void)
 	Warn_Count();
 	BeepDone();
 	SetLeds(leds_sta);
+#ifdef WIFI_MODE
 	ESP_upload_data();
+#endif
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI界面显示
@@ -375,7 +396,7 @@ void UI_CURV(void)
 			float dh = sh / (Temp_Max - Temp_Min);
 			//温度阈值Temp_stand
 			for (uint8_t i = 0; i < MAX_DATALEN ; i += 6)
-				u8g2_DrawHLine(&u8g2, ox + i, oy - (Temp_stand - Temp_Min) * dh , 3);//绘制温度阈值线
+				u8g2_DrawHLine(&u8g2, ox + i, oy - (sys_set.Temp_stand - Temp_Min) * dh , 3);//绘制温度阈值线
 			for (uint8_t i = 0; i < cTemp && i < MAX_DATALEN ; i++)
 				u8g2_DrawPixel(&u8g2 , ox + i, oy - (vTemp[i] - Temp_Min) * dh);//绘制温度点
 			break;
@@ -473,22 +494,22 @@ void UI_PARA(void)
 	}
 	//显示温度上限值
 	char strTemp[5];	//定义温度上限值数组
-	sprintf(strTemp, "%d", Temp_stand);
+	sprintf(strTemp, "%d", sys_set.Temp_stand);
 	u8g2_DrawStr(&u8g2, 104, 13, strTemp);
 	u8g2_DrawUTF8(&u8g2,117,13,"℃");
 	//显示震动灵敏度
 	char strSHOCK[5];	//定义震动灵敏度数组
-	sprintf(strSHOCK, "%d", Shock_sens);
+	sprintf(strSHOCK, "%d", sys_set.Shock_sens);
 	u8g2_DrawStr(&u8g2, 118, 28, strSHOCK);
 	//显示报警时长
 	char strALARM[5];	//定义报警时长数组
-	sprintf(strALARM, "%d", Alarm_time);
+	sprintf(strALARM, "%d", sys_set.Alarm_time);
 	u8g2_DrawStr(&u8g2, 108, 43, strALARM);
 	u8g2_DrawUTF8(&u8g2,122,43,"S");
 	//显示上传间隔
 	char strUPLOAD[6];	//定义上传间隔数组
-	if(Upload_inter<10)sprintf(strUPLOAD, "%.1f", Upload_inter);
-	else sprintf(strUPLOAD, "%.0f", Upload_inter);	
+	if(sys_set.Upload_inter <10)sprintf(strUPLOAD, "%.1f", sys_set.Upload_inter);
+	else sprintf(strUPLOAD, "%.0f", sys_set.Upload_inter);	
 	u8g2_DrawStr(&u8g2, 104, 58, strUPLOAD);
 	u8g2_DrawUTF8(&u8g2,122,58,"S");
 	//丝滑选择框显示
@@ -511,6 +532,7 @@ void UI_PARA(void)
 //-------------------------------------------------------------------------------------------------------------------
 void UI_key(void)
 {
+	static PARA_SYS tmp_sys_set;//临时比对变量，用于判断是否需要保存参数，防止不必要的写入
 	uint8_t key = ScanKey();//扫描按键键码
 	switch(key){
 		case KEY_UP://子菜单向上选择
@@ -524,30 +546,35 @@ void UI_key(void)
 			else if(UI_Select == GUI_LOGO){break;}
 			else {UI_Select++;break;}
 		case KEY_ADD:
-			if(UI_Select != GUI_LOGO&& UI_Select != GUI_PARA && UI_Select!=GUI_COMM)//非启动界面和参数设置界面左滑
+			if(UI_Select != GUI_LOGO && UI_Select != GUI_PARA && UI_Select!=GUI_COMM)//非启动界面和参数设置界面左滑
 			{
 				if(PAGE_Select<=0){PAGE_Select=list[UI_Select-1].page-1;}
 				else{PAGE_Select--;}				
 			}
 			else if(UI_Select == GUI_PARA)//参数设置界面:参数自加
 			{
+				memcpy(&tmp_sys_set,&sys_set,sizeof(sys_set));//将当前参数值保存到临时变量
 				switch(PARA_Select){
 					case PARA_TEMP:
-						if(Temp_stand==90)Temp_stand=0;
-						else Temp_stand++;
+						if(sys_set.Temp_stand==90)sys_set.Temp_stand=0;
+						else sys_set.Temp_stand++;
 						break;
 					case PARA_SHOC:
-						if(Shock_sens==9)Shock_sens=0;
-						else Shock_sens++;
+						if(sys_set.Shock_sens==9)sys_set.Shock_sens=0;
+						else sys_set.Shock_sens++;
 						break;
 					case PARA_ALAR:
-						if(Alarm_time==60)Alarm_time=0;
-						else Alarm_time++;
+						if(sys_set.Alarm_time==60)sys_set.Alarm_time=0;
+						else sys_set.Alarm_time++;
 						break;
 					case PARA_UPLO:
-						if(Upload_inter>=10)Upload_inter=0;
-						else Upload_inter += 0.1;
+						if(sys_set.Upload_inter>=10)sys_set.Upload_inter=0;
+						else sys_set.Upload_inter += 0.1;
 						break;
+				}
+				if(memcmp(&tmp_sys_set,&sys_set,sizeof(sys_set))!=0){
+					printf("Save: %d℃, %d, %d秒, %.1f毫秒",sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
+					W25QXX_Write((uint8_t *)&sys_set,0,sizeof(sys_set));//写入参数
 				}
 			}
 			else if(UI_Select == GUI_COMM && PAGE_Select==SERV_CONNE)
@@ -563,23 +590,28 @@ void UI_key(void)
 			}
 			else if(UI_Select == GUI_PARA)//参数设置界面:参数自加
 			{
+				memcpy(&tmp_sys_set,&sys_set,sizeof(sys_set));//将当前参数值保存到临时变量
 				switch(PARA_Select){
 					case PARA_TEMP:
-						if(Temp_stand==0)Temp_stand=90;
-						else Temp_stand--;
+						if(sys_set.Temp_stand==0)sys_set.Temp_stand=90;
+						else sys_set.Temp_stand--;
 						break;
 					case PARA_SHOC:
-						if(Shock_sens==0)Shock_sens=9;
-						else Shock_sens--;
+						if(sys_set.Shock_sens==0)sys_set.Shock_sens=9;
+						else sys_set.Shock_sens--;
 						break;
 					case PARA_ALAR:
-						if(Alarm_time==0)Alarm_time=60;
-						else Alarm_time--;
+						if(sys_set.Alarm_time==0)sys_set.Alarm_time=60;
+						else sys_set.Alarm_time--;
 						break;
 					case PARA_UPLO:
-						if(Upload_inter<0.1)Upload_inter=10;
-						else Upload_inter -= 0.1;
+						if(sys_set.Upload_inter<0.1)sys_set.Upload_inter=10;
+						else sys_set.Upload_inter -= 0.1;
 						break;
+				}
+				if(memcmp(&tmp_sys_set,&sys_set,sizeof(sys_set))!=0){
+					printf("Save: %d℃, %d, %d秒, %.1f毫秒",sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
+					W25QXX_Write((uint8_t *)&sys_set,0,sizeof(sys_set));//写入参数
 				}
 			}
 			break;

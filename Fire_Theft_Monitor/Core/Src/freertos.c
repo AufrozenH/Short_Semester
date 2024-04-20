@@ -162,13 +162,13 @@ void MX_FREERTOS_Init(void) {
 void StartMainTask(void *argument)
 {
   /* USER CODE BEGIN StartMainTask */
-  //等待mpu6050初始化
+  //等待mpu6050初始�?
   printf("in mainTask!");
   while(!mpuok){osDelay(1);}
   /* Infinite loop */
   for(;;)
   {
-    //系统状态机控制
+    //系统状�?�机控制
 		SYS_state();
     osDelay(1);
   }
@@ -185,13 +185,13 @@ void StartMainTask(void *argument)
 void StartKeyTask(void *argument)
 {
   /* USER CODE BEGIN StartKeyTask */
-  //等待mpu6050初始化
+  //等待mpu6050初始�?
   printf("in keyTask");
 	while(!mpuok){osDelay(1);}
   /* Infinite loop */
   for(;;)
   {
-    //通过if else间接锁定了按键，只要报警了，按键一定被锁定
+    //通过if else间接锁定了按键，只要报警了，按键�?定被锁定
 		if(Temp_state || Shock_state)Ulock();
 		else UI_key();
     osDelay(1);
@@ -214,7 +214,6 @@ void StartUartTask(void *argument)
   {
     if (EspRxDataOk())
     {
-      // ??????
     }
     osDelay(1);
   }
@@ -232,7 +231,7 @@ void StartGUITask(void *argument)
 {
   /* USER CODE BEGIN StartGUITask */
 	UI_Init();
-  //等待mpu6050初始化
+  //等待mpu6050初始�?
 	while(!mpuok){osDelay(1);}
   /* Infinite loop */
   for(;;)
