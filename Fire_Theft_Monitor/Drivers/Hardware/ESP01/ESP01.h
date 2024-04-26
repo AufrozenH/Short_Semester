@@ -10,21 +10,21 @@ extern "C" {
 #include "usart.h"
 #include <cmsis_os.h>
 
-// ĞŞ¸ÄÒÔÏÂÄÚÈİÎªÄãµÄ¹²ÏíÈÈµãÃû³Æ¡¢ÃÜÂë
+// ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½Èµï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½ï¿½ï¿½ï¿½
 #define AP_NAME		"AufrozenH"
 #define AP_PSW		"wzh200388#"
 // #define AP_NAME		"martinx"
 // #define AP_PSW		"2257546277"
 
-// ĞŞ¸ÄÒÔÏÂÄÚÈİÎªÄãµÄÈÈµãËùÔÚµçÄÔ»òÊÖ»úIPµØÖ·ºÍTCP·şÎñÆ÷¶Ë¿Ú
-#define TCP_SERVER 		"192.168.43.33"
-#define TCP_PORT 			8686
-#define TCP_SERVER_STR 	"43.33: 8686"
-// #define TCP_SERVER 		"192.168.191.78"
-// #define TCP_PORT 			6789
-// #define TCP_SERVER_STR 	"191.78: 6789"
+// ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Èµï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½Ô»ï¿½ï¿½Ö»ï¿½IPï¿½ï¿½Ö·ï¿½ï¿½TCPï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½
+// #define TCP_SERVER 		"192.168.43.33"
+// #define TCP_PORT 			8686
+// #define TCP_SERVER_STR 	"43.33: 8686"
+#define TCP_SERVER 		"192.168.87.78"
+#define TCP_PORT 			4321
+#define TCP_SERVER_STR 	"16.1: 4321"
 
-/* ½«ÒÔÏÂUSART_RX_DATAÊı¾İÀàĞÍ¶¨Òå·Åµ½usart.hÍ·ÎÄ¼ş
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½USART_RX_DATAï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½Åµï¿½usart.hÍ·ï¿½Ä¼ï¿½
 #define RXBUF_SIZE 	512
 typedef struct {
 	uint16_t rx_len;
@@ -32,10 +32,10 @@ typedef struct {
 } USART_RX_DATA;
 */
 
-/* ½«ÒÔÏÂ´úÂë¸´ÖÆµ½´®¿ÚÈÎÎñÖĞ½øĞĞ½ÓÊÕÊı¾İ´¦Àí
+/* ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½ï¿½ë¸´ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ½ï¿½ï¿½Ğ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ´ï¿½ï¿½ï¿½
 if (EspRxDataOk())
 {
-	// ½ÓÊÕÊı¾İ´¦Àí
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ´ï¿½ï¿½ï¿½
 }
 */
 
@@ -48,9 +48,9 @@ typedef struct {
 } ESP01;
 
 extern ESP01 g_esp01;
-uint8_t EspRxDataOk(void);		// ½ÓÊÕÊı¾İ´¦Àí
-void SendEspStr(char *str);		// ·¢ËÍ×Ö·û´®
-void InitEsp01(UART_HandleTypeDef* pUartHandle);	// ³õÊ¼»¯ESP01´®¿Ú
+uint8_t EspRxDataOk(void);		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ´ï¿½ï¿½ï¿½
+void SendEspStr(char *str);		// ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+void InitEsp01(UART_HandleTypeDef* pUartHandle);	// ï¿½ï¿½Ê¼ï¿½ï¿½ESP01ï¿½ï¿½ï¿½ï¿½
 
 #ifdef __cplusplus
 }
