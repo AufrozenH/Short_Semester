@@ -30,6 +30,9 @@
 //#include "MPU6050.h"
 #include "ESP01.h"
 #include "Device.h"
+#include "stdlib.h"
+#include "string.h"
+#include "w25qxx.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -168,7 +171,7 @@ void StartMainTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    //系统状�?�机控制
+    //系统状态机控制
 		SYS_state();
     osDelay(1);
   }
@@ -185,13 +188,13 @@ void StartMainTask(void *argument)
 void StartKeyTask(void *argument)
 {
   /* USER CODE BEGIN StartKeyTask */
-  //等待mpu6050初始�?
+  //等待mpu6050初始化
   printf("in keyTask");
 	while(!mpuok){osDelay(1);}
   /* Infinite loop */
   for(;;)
   {
-    //通过if else间接锁定了按键，只要报警了，按键�?定被锁定
+    //通过if else间接锁定了按键，只要报警了，按键被锁定
 		if(Temp_state || Shock_state)Ulock();
 		else UI_key();
     osDelay(1);
@@ -214,6 +217,43 @@ void StartUartTask(void *argument)
   {
     if (EspRxDataOk())
     {
+      if(g_esp01.rxdata.rx_len>0){
+        char* pstr=(char *)(g_esp01.rxdata.rx_buf);
+        if(strstr(pstr,"UPON")==pstr){
+          g_bupting=1;
+        }else if(strstr(pstr,"UPOFF")==pstr){
+          g_bupting=0;
+        }else if(strstr(pstr,"GETPARA")==pstr){
+          char tmp_upstr[50];
+          sprintf(tmp_upstr,"param:%6d,%6d,%6d,%6.1f\n",sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
+          esp01_send_cnt+=strlen(tmp_upstr);
+			    SendEspStr(tmp_upstr);
+        }else if(strstr(pstr,"ParamSet:")==pstr){
+          PARA_SYS tmp_sys_set;
+          char* p=pstr+9;
+          tmp_sys_set.Temp_stand=atoi(p);
+          p=strstr(p,",");
+          if(p>pstr){
+            tmp_sys_set.Shock_sens=atoi(p+1);
+            p=strstr(p+1,",");
+            if(p>pstr){
+              tmp_sys_set.Alarm_time=atoi(p+1);
+              p=strstr(p+1,",");
+              if(p>pstr){
+                tmp_sys_set.Upload_inter=(float)atoi(p+1)/1000.0;
+                if((tmp_sys_set.Temp_stand>=0 && tmp_sys_set.Temp_stand<=90) &&
+                  (tmp_sys_set.Shock_sens>=0 && tmp_sys_set.Shock_sens<=9) &&
+                  (tmp_sys_set.Alarm_time>=0 && tmp_sys_set.Alarm_time<=60) &&
+                  (tmp_sys_set.Upload_inter>=0.1 && tmp_sys_set.Upload_inter<=10)){
+                    memcpy(&sys_set,&tmp_sys_set,sizeof(sys_set));
+                    printf("Save: %d℃, %d, %d秒, %.1f毫秒",sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
+					          W25QXX_Write((uint8_t *)&sys_set,0,sizeof(sys_set));//写入参数
+                  }
+              }
+            }
+          }
+        }
+      }
     }
     osDelay(1);
   }

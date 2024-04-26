@@ -20,9 +20,9 @@ extern "C" {
 // #define TCP_SERVER 		"192.168.43.33"
 // #define TCP_PORT 			8686
 // #define TCP_SERVER_STR 	"43.33: 8686"
-#define TCP_SERVER 		"192.168.191.78"
-#define TCP_PORT 			6789
-#define TCP_SERVER_STR 	"191.78: 6789"
+#define TCP_SERVER 		"192.168.87.78"
+#define TCP_PORT 			4321
+#define TCP_SERVER_STR 	"16.1: 4321"
 
 /* 将以下USART_RX_DATA数据类型定义放到usart.h头文件
 #define RXBUF_SIZE 	512

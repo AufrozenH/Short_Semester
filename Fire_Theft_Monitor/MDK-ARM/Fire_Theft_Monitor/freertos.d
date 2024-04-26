@@ -48,4 +48,6 @@ fire_theft_monitor/freertos.o: ..\Core\Src\freertos.c \
   ..\Drivers\Hardware\DEVICE\DS_18B20.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\Drivers\Hardware\ESP01\ESP01.h ..\Core\Inc\usart.h \
-  ..\Core\Inc\main.h
+  ..\Core\Inc\main.h C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
+  ..\Drivers\Hardware\DEVICE\w25qxx.h
