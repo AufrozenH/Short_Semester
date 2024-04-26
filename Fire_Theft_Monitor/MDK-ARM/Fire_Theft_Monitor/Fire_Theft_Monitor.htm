@@ -3,7 +3,7 @@
 <title>Static Call Graph - [Fire_Theft_Monitor\Fire_Theft_Monitor.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Fire_Theft_Monitor\Fire_Theft_Monitor.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Fri Apr 26 20:18:28 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Fri Apr 26 21:11:36 2024
 <BR><P>
 <H3>Maximum Stack Usage =        880 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2007,8 +2007,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartKeyTask
 </UL>
 
-<P><STRONG><a name="[15f]"></a>UI_logo</STRONG> (Thumb, 184 bytes, Stack size 16 bytes, ui.o(.text.UI_logo))
-<BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
+<P><STRONG><a name="[15f]"></a>UI_logo</STRONG> (Thumb, 252 bytes, Stack size 24 bytes, ui.o(.text.UI_logo))
+<BR><BR>[Stack]<UL><LI>Max Depth = 176 + Unknown Stack Size
 <LI>Call Chain = UI_logo &rArr; u8g2_DrawUTF8 &rArr; u8g2_draw_string &rArr; u8g2_font_decode_glyph &rArr; u8g2_DrawHVLine
 </UL>
 <BR>[Calls]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u8g2_SendBuffer
@@ -2016,6 +2016,7 @@ Global Symbols
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u8g2_DrawXBMP
 <LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u8g2_DrawUTF8
 <LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u8g2_SetFont
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u8g2_DrawLine
 </UL>
 <BR>[Called By]<UL><LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_Show
 </UL>
@@ -2704,6 +2705,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[156]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u8g2_DrawPixel
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_Line
+<LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_logo
 <LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_menu
 </UL>
 
