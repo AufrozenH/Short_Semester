@@ -212,11 +212,28 @@ void StartKeyTask(void *argument)
 void StartUartTask(void *argument)
 {
   /* USER CODE BEGIN StartUartTask */
+  static uint8_t esp01_rx_blink_cnt=0;
   /* Infinite loop */
   for(;;)
   {
+    
+    if(esp01_blink_flag==1){
+      leds_sta=0xff;
+      esp01_rx_blink_cnt++;
+      if(esp01_rx_blink_cnt>=10){
+        leds_sta=0;
+        esp01_blink_flag=0;
+        esp01_rx_blink_cnt=0;
+      }
+    }
+
     if (EspRxDataOk())
     {
+      //处理LED闪烁和接收字节增加
+      esp01_blink_flag=1;
+      esp01_rx_blink_cnt=0;
+      esp01_recv_cnt+=g_esp01.rxdata.rx_len;
+
       if(g_esp01.rxdata.rx_len>0){
         char* pstr=(char *)(g_esp01.rxdata.rx_buf);
         if(strstr(pstr,"UPON")==pstr){
