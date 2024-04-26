@@ -3,7 +3,7 @@
 <title>Static Call Graph - [Fire_Theft_Monitor\Fire_Theft_Monitor.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Fire_Theft_Monitor\Fire_Theft_Monitor.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Fri Apr 26 17:46:52 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Fri Apr 26 20:18:28 2024
 <BR><P>
 <H3>Maximum Stack Usage =        880 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -625,7 +625,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sputc
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
-<BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartUartTask
+<BR>[Called By]<UL><LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYS_state
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartUartTask
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_PARA
 <LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_COMM
 <LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitEsp01
@@ -724,6 +725,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = strlen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendEspStr
+<LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYS_state
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartUartTask
 <LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitEsp01
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP_upload_data
@@ -1093,7 +1095,7 @@ Global Symbols
 <P><STRONG><a name="[7]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(.text.DebugMon_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[cf]"></a>ESP_upload_data</STRONG> (Thumb, 408 bytes, Stack size 176 bytes, device.o(.text.ESP_upload_data))
+<P><STRONG><a name="[cf]"></a>ESP_upload_data</STRONG> (Thumb, 432 bytes, Stack size 176 bytes, device.o(.text.ESP_upload_data))
 <BR><BR>[Stack]<UL><LI>Max Depth = 304 + Unknown Stack Size
 <LI>Call Chain = ESP_upload_data &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1178,12 +1180,13 @@ Global Symbols
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Start
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Read_Byte
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Presence
-<LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ScanKey
+<LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ScanKey
 <LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Ulock_scan
 </UL>
 
 <P><STRONG><a name="[c9]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f4xx_hal_gpio.o(.text.HAL_GPIO_WritePin))
-<BR><BR>[Called By]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
+<BR><BR>[Called By]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLeds
+<LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
 <LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2cRead
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Stop
 <LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_WaitAck
@@ -1199,7 +1202,6 @@ Global Symbols
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Write_Byte
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Read_Byte
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Rst
-<LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLeds
 <LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write595
 </UL>
 
@@ -1554,7 +1556,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartDataTask
 </UL>
 
-<P><STRONG><a name="[10b]"></a>InitEsp01</STRONG> (Thumb, 680 bytes, Stack size 104 bytes, esp01.o(.text.InitEsp01))
+<P><STRONG><a name="[10b]"></a>InitEsp01</STRONG> (Thumb, 700 bytes, Stack size 104 bytes, esp01.o(.text.InitEsp01))
 <BR><BR>[Stack]<UL><LI>Max Depth = 256 + Unknown Stack Size
 <LI>Call Chain = InitEsp01 &rArr; osMessageQueueNew &rArr; xQueueGenericCreate &rArr; pvPortMalloc &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
@@ -1769,14 +1771,17 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartDataTask
 </UL>
 
-<P><STRONG><a name="[141]"></a>SYS_state</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, ui.o(.text.SYS_state))
-<BR><BR>[Stack]<UL><LI>Max Depth = 312 + Unknown Stack Size
+<P><STRONG><a name="[141]"></a>SYS_state</STRONG> (Thumb, 200 bytes, Stack size 40 bytes, ui.o(.text.SYS_state))
+<BR><BR>[Stack]<UL><LI>Max Depth = 344 + Unknown Stack Size
 <LI>Call Chain = SYS_state &rArr; ESP_upload_data &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LOGO_state
+<BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendEspStr
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LOGO_state
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BeepDone
 <LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Beep
-<LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLeds
 <LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Warn_Count
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP_upload_data
 </UL>
@@ -1789,7 +1794,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RateCube
 </UL>
 
-<P><STRONG><a name="[144]"></a>ScanKey</STRONG> (Thumb, 256 bytes, Stack size 16 bytes, device.o(.text.ScanKey))
+<P><STRONG><a name="[143]"></a>ScanKey</STRONG> (Thumb, 256 bytes, Stack size 16 bytes, device.o(.text.ScanKey))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ScanKey
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
@@ -1803,16 +1808,17 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartUartTask
+<BR>[Called By]<UL><LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYS_state
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartUartTask
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP_upload_data
 </UL>
 
-<P><STRONG><a name="[143]"></a>SetLeds</STRONG> (Thumb, 142 bytes, Stack size 24 bytes, device.o(.text.SetLeds))
+<P><STRONG><a name="[144]"></a>SetLeds</STRONG> (Thumb, 142 bytes, Stack size 24 bytes, device.o(.text.SetLeds))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = SetLeds
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
-<BR>[Called By]<UL><LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYS_state
+<BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartUartTask
 </UL>
 
 <P><STRONG><a name="[67]"></a>StartDataTask</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, freertos.o(.text.StartDataTask))
@@ -1847,7 +1853,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.text.MX_FREERTOS_Init)
 </UL>
 <P><STRONG><a name="[63]"></a>StartMainTask</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, freertos.o(.text.StartMainTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 312 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 344 + Unknown Stack Size
 <LI>Call Chain = StartMainTask &rArr; SYS_state &rArr; ESP_upload_data &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYS_state
@@ -1856,13 +1862,14 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.text.MX_FREERTOS_Init)
 </UL>
-<P><STRONG><a name="[65]"></a>StartUartTask</STRONG> (Thumb, 432 bytes, Stack size 80 bytes, freertos.o(.text.StartUartTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 760 + Unknown Stack Size
+<P><STRONG><a name="[65]"></a>StartUartTask</STRONG> (Thumb, 624 bytes, Stack size 40 bytes, freertos.o(.text.StartUartTask))
+<BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
 <LI>Call Chain = StartUartTask &rArr; EspRxDataOk &rArr; ProcEsp01Data &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendEspStr
 <LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;W25QXX_Write
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EspRxDataOk
+<LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLeds
 <LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dcmplt
@@ -1917,7 +1924,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RateCube
 </UL>
 
-<P><STRONG><a name="[150]"></a>UI_COMM</STRONG> (Thumb, 308 bytes, Stack size 32 bytes, ui.o(.text.UI_COMM))
+<P><STRONG><a name="[150]"></a>UI_COMM</STRONG> (Thumb, 340 bytes, Stack size 32 bytes, ui.o(.text.UI_COMM))
 <BR><BR>[Stack]<UL><LI>Max Depth = 184 + Unknown Stack Size
 <LI>Call Chain = UI_COMM &rArr; u8g2_DrawUTF8 &rArr; u8g2_draw_string &rArr; u8g2_font_decode_glyph &rArr; u8g2_DrawHVLine
 </UL>
@@ -1983,7 +1990,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartGUITask
 </UL>
 
-<P><STRONG><a name="[147]"></a>UI_key</STRONG> (Thumb, 888 bytes, Stack size 32 bytes, ui.o(.text.UI_key))
+<P><STRONG><a name="[147]"></a>UI_key</STRONG> (Thumb, 896 bytes, Stack size 32 bytes, ui.o(.text.UI_key))
 <BR><BR>[Stack]<UL><LI>Max Depth = 288 + Unknown Stack Size
 <LI>Call Chain = UI_key &rArr; InitEsp01 &rArr; osMessageQueueNew &rArr; xQueueGenericCreate &rArr; pvPortMalloc &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
@@ -1995,7 +2002,7 @@ Global Symbols
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memcmp
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 <LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitEsp01
-<LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ScanKey
+<LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ScanKey
 </UL>
 <BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartKeyTask
 </UL>
@@ -3954,6 +3961,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYS_Init
 <LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_key
+<LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYS_state
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartUartTask
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rotate_3D
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UI_PARA

@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "UI.h"
+#include "MPU6050.h"
 
 ESP01 g_esp01;
 
@@ -45,33 +47,33 @@ void InitEsp01(UART_HandleTypeDef* pUartHandle)
 	g_esp01.bAtOK = 0;
 	g_esp01.bConnect = 0;
 	
-	printf("ÍË³öESP01Ä£¿éÍ¸´«Ä£Ê½...\n");
+	printf("ï¿½Ë³ï¿½ESP01Ä£ï¿½ï¿½Í¸ï¿½ï¿½Ä£Ê½...\n");
 	SendATCmd("+++", 500);
 	
-	printf("²âÊÔESP01Ä£¿éÊÇ·ñ´æÔÚ...\n");
+	printf("ï¿½ï¿½ï¿½ï¿½ESP01Ä£ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½...\n");
 	SendATCmd("AT\r\n", 1000);
 	
 	if (g_esp01.bAtOK)
 	{
-		printf("¹Ø±ÕÄ£¿é»ØÏÔ\n");
+		printf("ï¿½Ø±ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½\n");
 		SendATCmd("ATE0\r\n", 500);
-		printf("²é¿´Ä£¿é°æ±¾ÐÅÏ¢...\n");
+		printf("ï¿½é¿´Ä£ï¿½ï¿½æ±¾ï¿½ï¿½Ï¢...\n");
 		SendATCmd("AT+GMR\r\n", 1000);
 
-		printf("¿ªÆôAP+STAÄ£Ê½\n");
+		printf("ï¿½ï¿½ï¿½ï¿½AP+STAÄ£Ê½\n");
 		SendATCmd("AT+CWMODE=3\r\n", 500);
 		
-		printf("²éÑ¯SSID\n");
+		printf("ï¿½ï¿½Ñ¯SSID\n");
 		SendATCmd("AT+CWSAP?\r\n", 500);
 
-		printf("²éÑ¯µ±Ç°Á¬½ÓµÄÈÈµã\n");
+		printf("ï¿½ï¿½Ñ¯ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Óµï¿½ï¿½Èµï¿½\n");
 		SendATCmd("AT+CWJAP?\r\n", 500);
 	
 		if (strcmp(g_esp01.strAPName, AP_NAME))
 		{
-//		printf("¶Ï¿ªµ±Ç°Á¬½ÓµÄÈÈµã\n");
+//		printf("ï¿½Ï¿ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Óµï¿½ï¿½Èµï¿½\n");
 //		SendATCmd("AT+CWQAP\r\n", 500);
-			printf("Á¬½ÓWiFiÈÈµã\n");
+			printf("ï¿½ï¿½ï¿½ï¿½WiFiï¿½Èµï¿½\n");
 			g_esp01.bConnect = 1;
 			sprintf(buf, "AT+CWJAP=\"%s\",\"%s\"\r\n", AP_NAME, AP_PSW);
 			SendATCmd(buf, 10000);
@@ -81,18 +83,18 @@ void InitEsp01(UART_HandleTypeDef* pUartHandle)
 		
 		if (g_esp01.bConnect > 1)
 		{
-			printf("²éÑ¯Éè±¸IP\n");
+			printf("ï¿½ï¿½Ñ¯ï¿½è±¸IP\n");
 			SendATCmd("AT+CIFSR\r\n", 500);
 			
-			printf("²éÑ¯µ±Ç°Á¬½ÓµÄTCP·þÎñÆ÷\n");
+			printf("ï¿½ï¿½Ñ¯ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Óµï¿½TCPï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
 			SendATCmd("AT+CIPSTATUS\r\n", 500);
 			
-			printf("Á¬½ÓÔ¶³ÌTCP·þÎñÆ÷...\n");
+			printf("ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½TCPï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...\n");
 			sprintf(buf, "AT+CIPSTART=\"TCP\",\"%s\",%d\r\n", TCP_SERVER, TCP_PORT);
 			SendATCmd(buf, 2000);
-			printf("¿ªÆôÍ¸´«Ä£Ê½\n");
+			printf("ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ï¿½Ä£Ê½\n");
 			SendATCmd("AT+CIPMODE=1\r\n", 500);
-			printf("¿ªÊ¼Í¸´«\n");
+			printf("ï¿½ï¿½Ê¼Í¸ï¿½ï¿½\n");
 			SendATCmd("AT+CIPSEND\r\n", 500);
 		}
 	}
@@ -114,7 +116,7 @@ void RxEvent(UART_HandleTypeDef *huart, uint16_t Size)
 	}
 }
 
-// ´®¿Ú½ÓÊÕÊÂ¼þ»Øµ÷º¯Êý£¬Èç¹ûÒªÖ§³Ö¶à¸ö´®¿Ú½ÓÊÕ£¬°Ñ¸Ãº¯ÊýÒÆµ½FreeRTOS.cÎÄ¼þÄ©Î²£¬²¢ÔÚESP01.hÖÐ½«RxEventº¯ÊýÉùÃ÷Ò»±é
+// ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÖ§ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Õ£ï¿½ï¿½Ñ¸Ãºï¿½ï¿½ï¿½ï¿½Æµï¿½FreeRTOS.cï¿½Ä¼ï¿½Ä©Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ESP01.hï¿½Ð½ï¿½RxEventï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
 	RxEvent(huart, Size);
@@ -138,7 +140,7 @@ void ProcEsp01Data(USART_RX_DATA *pdata)
 				{
 					if (1 == g_esp01.bConnect)
 					{
-						g_esp01.bConnect = 2;	// ÒÑÁ¬½ÓWifiÈÈµã
+						g_esp01.bConnect = 2;	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Wifiï¿½Èµï¿½
 						printf("ESP01 conn:2\n");
 					}
 				}
@@ -151,20 +153,21 @@ void ProcEsp01Data(USART_RX_DATA *pdata)
 
 				if (strstr(pstr, "CONNECT\r\n\r\nOK") == pstr && g_esp01.bConnect == 2)
 				{
-					g_esp01.bConnect = 3;		// ÒÑÁ¬½ÓTCP·þÎñÆ÷
+					g_esp01.bConnect = 3;		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½TCPï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					printf("ESP01 conn:3\n");
 				}
 				else if (strstr(pstr, "ALREADY CONNECTED") == pstr && g_esp01.bConnect == 2)
 				{
-					g_esp01.bConnect = 3;		// ÒÑÁ¬½ÓTCP·þÎñÆ÷
+					g_esp01.bConnect = 3;		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½TCPï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					printf("ESP01 conn:3\n");
+					
 				}
 				else if (strstr(pstr, "+CWSAP:") == pstr)
 				{
 					char *pc = strstr(pstr + 8, "\"");
 					if (pc > pstr + 8)
 					{
-						// SSIDÃû³Æ
+						// SSIDï¿½ï¿½ï¿½ï¿½
 						strncpy(g_esp01.strESPName, pstr + 8, pc - pstr - 8);
 					}
 				}
@@ -173,7 +176,7 @@ void ProcEsp01Data(USART_RX_DATA *pdata)
 					char *pc = strstr(pstr + 8, "\"");
 					if (pc > pstr + 8)
 					{
-						// ÒÑÁ¬½ÓµÄÈÈµãÃû³Æ
+						// ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½Èµï¿½ï¿½ï¿½ï¿½ï¿½
 						strncpy(g_esp01.strAPName, pstr + 8, pc - pstr - 8);
 					}
 				}

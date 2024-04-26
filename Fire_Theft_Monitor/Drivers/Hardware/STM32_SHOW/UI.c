@@ -144,6 +144,7 @@ void UI_Init(void)
 //-------------------------------------------------------------------------------------------------------------------
 void SYS_state(void)
 {
+	static uint8_t send_state = 0;
 	//默认就是一种初始化的UI_Select
 	//这里的状态机就是为的显示初始人物姓名的大头照
 	switch(UI_Select){
@@ -157,10 +158,20 @@ void SYS_state(void)
 	}
 	Warn_Count();
 	BeepDone();
-	SetLeds(leds_sta);
+
+	if(send_state==0 && g_esp01.bConnect == 3)
+	{
+		sprintf(upstr,"param:%6d,%6d,%6d,%6.1f\n",sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
+		esp01_send_cnt+=strlen(upstr);
+		if(!esp01_blink_flag) esp01_blink_flag=1;
+		SendEspStr(upstr);
+		send_state=1;
+	}
+
 #ifdef WIFI_MODE
 	ESP_upload_data();
 #endif
+	
 }
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      UI界面显示
@@ -580,7 +591,6 @@ void UI_key(void)
 				if(memcmp(&tmp_sys_set,&sys_set,sizeof(sys_set))!=0){
 					printf("Save: %d℃, %d, %d秒, %.1f毫秒",sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
 					W25QXX_Write((uint8_t *)&sys_set,0,sizeof(sys_set));//写入参数
-					esp01_blink_flag=1;
 				}
 			}
 			else if(UI_Select == GUI_COMM && PAGE_Select==SERV_CONNE)

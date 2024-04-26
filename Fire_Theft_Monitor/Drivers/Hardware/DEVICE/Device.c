@@ -49,6 +49,7 @@ void ESP_upload_data(void)
 			sprintf(upstr,"TEMP:%5.1f, axyz:%6d,%6d,%6d, gxyz:%6d,%6d%6d, ang:%6.1f,%6.1f,%6.1f,state:%6d,%6d,param:%6d,%6d,%6d,%6.1f\n",
 			Temp,ax,ay,az,gx,gy,gz,fAX,fAY,fAZ,Temp_state,Shock_state,sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
 			esp01_send_cnt+=strlen(upstr);
+			if(!esp01_blink_flag) esp01_blink_flag=1;
 			SendEspStr(upstr);
 		}
 	}

@@ -216,7 +216,7 @@ void StartUartTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    
+    //leds_sta=0;
     if(esp01_blink_flag==1){
       leds_sta=0xff;
       esp01_rx_blink_cnt++;
@@ -226,8 +226,9 @@ void StartUartTask(void *argument)
         esp01_rx_blink_cnt=0;
       }
     }
+		SetLeds(leds_sta);
 
-    if (EspRxDataOk())
+    if (EspRxDataOk() && UI_Select != GUI_LOGO)
     {
       //处理LED闪烁和接收字节增加
       esp01_blink_flag=1;
@@ -241,10 +242,10 @@ void StartUartTask(void *argument)
         }else if(strstr(pstr,"UPOFF")==pstr){
           g_bupting=0;
         }else if(strstr(pstr,"GETPARA")==pstr){
-          char tmp_upstr[50];
-          sprintf(tmp_upstr,"param:%6d,%6d,%6d,%6.1f\n",sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
-          esp01_send_cnt+=strlen(tmp_upstr);
-			    SendEspStr(tmp_upstr);
+          sprintf(upstr,"param:%6d,%6d,%6d,%6.1f\n",sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
+          esp01_send_cnt+=strlen(upstr);
+          if(!esp01_blink_flag) esp01_blink_flag=1;
+          SendEspStr(upstr);
         }else if(strstr(pstr,"ParamSet:")==pstr){
           PARA_SYS tmp_sys_set;
           char* p=pstr+9;
