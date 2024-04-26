@@ -12,6 +12,7 @@
     "stm32_u8g2.h": "c",
     "spi.h": "c",
     "tim.h": "c",
-    "gpio.h": "c"
+    "gpio.h": "c",
+    "u8g2.h": "c"
   }
 }

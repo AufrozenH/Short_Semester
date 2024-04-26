@@ -10,11 +10,11 @@ extern "C" {
 #include "usart.h"
 #include <cmsis_os.h>
 
-// �޸���������Ϊ��Ĺ����ȵ����ơ�����?
-#define AP_NAME		"AufrozenH"
-#define AP_PSW		"wzh200388#"
-// #define AP_NAME		"martinx"
-// #define AP_PSW		"2257546277"
+// �޸���������Ϊ��Ĺ����ȵ����ơ�����??
+// #define AP_NAME		"AufrozenH"
+// #define AP_PSW		"wzh200388#"
+#define AP_NAME		"martinx"
+#define AP_PSW		"2257546277"
 
 // �޸���������Ϊ����ȵ����ڵ��Ի��ֻ�IP��ַ��TCP�������˿�
 #define TCP_SERVER 		"192.168.43.33"

@@ -88,7 +88,9 @@ int cYaw=0;//航向角数据缓存计数
 
 uint8_t g_bupting=0; //上传开关
 uint32_t esp01_send_cnt=0;//上传数据计数
+uint32_t esp01_recv_cnt=0;//接收数据计数
 char upstr[145];
+uint8_t esp01_blink_flag=0; //esp01收发闪烁
 
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -476,7 +478,10 @@ void UI_COMM(void){
 			u8g2_DrawUTF8(&u8g2,52,10,"SEND_BYTE:");//发送字节数
 			sprintf(prt_str,"%d",esp01_send_cnt);
 			u8g2_DrawUTF8(&u8g2,52,23,prt_str);
+
 			u8g2_DrawUTF8(&u8g2,52,35,"RECE_BYTE:");//接收字节数
+			sprintf(prt_str,"%d",esp01_recv_cnt);
+			u8g2_DrawUTF8(&u8g2,52,48,prt_str);
 			break;
 	}
 }
@@ -575,6 +580,7 @@ void UI_key(void)
 				if(memcmp(&tmp_sys_set,&sys_set,sizeof(sys_set))!=0){
 					printf("Save: %d℃, %d, %d秒, %.1f毫秒",sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
 					W25QXX_Write((uint8_t *)&sys_set,0,sizeof(sys_set));//写入参数
+					esp01_blink_flag=1;
 				}
 			}
 			else if(UI_Select == GUI_COMM && PAGE_Select==SERV_CONNE)
@@ -639,7 +645,10 @@ void UI_key(void)
 			else if(UI_Select == GUI_COMM)
 			{
 				if(PAGE_Select==SERV_CONNE)InitEsp01(&huart6);//关闭|开启 数据上传
-				else esp01_send_cnt=0;//清空上传数据计数			
+				else{
+					esp01_send_cnt=0;//清空上传数据计数
+					esp01_recv_cnt=0;//清空接收数据计数
+				}			
 			}
 			break;
 		case KEY_LEAVE:

@@ -120,7 +120,10 @@ extern uint8_t g_bupting; //上传开关
 extern uint32_t up_tick; 
 extern char upstr[145]; //esp数据上报临时数组
 extern uint32_t esp01_send_cnt;
+extern uint32_t esp01_recv_cnt;
 extern PARA_SYS sys_set;
+extern uint8_t leds_sta;
+extern uint8_t esp01_blink_flag;
 
 void SYS_Init(void);
 void UI_Init(void);
