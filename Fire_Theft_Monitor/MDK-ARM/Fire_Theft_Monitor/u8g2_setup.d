@@ -1,8 +1,8 @@
 fire_theft_monitor/u8g2_setup.o: ..\Drivers\Hardware\u8g2\u8g2_setup.c \
   ..\Drivers\Hardware\u8g2\u8g2.h ..\Drivers\Hardware\u8g2\u8x8.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdarg.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\limits.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\assert.h
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdarg.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\limits.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\string.h \
+  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\assert.h

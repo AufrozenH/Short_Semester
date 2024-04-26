@@ -16,9 +16,9 @@
 #include "W25QXX.h"
 
 //此宏定义为开启QJY模式，如需显示wzh信息，请取消注释
-#define QJY_MODE 1;
+// #define QJY_MODE 1;
 //此宏定义为开启WiFi，如需开启WiFi，请取消注释此宏定义
-//#define WIFI_MODE 1;
+#define WIFI_MODE 1;
 
 u8g2_t u8g2;
 
