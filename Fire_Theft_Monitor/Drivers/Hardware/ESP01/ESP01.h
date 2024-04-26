@@ -11,18 +11,18 @@ extern "C" {
 #include <cmsis_os.h>
 
 // �޸���������Ϊ��Ĺ����ȵ����ơ�����?
-// #define AP_NAME		"AufrozenH"
-// #define AP_PSW		"wzh200388#"
-#define AP_NAME		"martinx"
-#define AP_PSW		"2257546277"
+#define AP_NAME		"AufrozenH"
+#define AP_PSW		"wzh200388#"
+// #define AP_NAME		"martinx"
+// #define AP_PSW		"2257546277"
 
 // �޸���������Ϊ����ȵ����ڵ��Ի��ֻ�IP��ַ��TCP�������˿�
-// #define TCP_SERVER 		"192.168.43.33"
-// #define TCP_PORT 			8686
-// #define TCP_SERVER_STR 	"43.33: 8686"
-#define TCP_SERVER 		"192.168.87.78"
-#define TCP_PORT 			4321
-#define TCP_SERVER_STR 	"16.1: 4321"
+#define TCP_SERVER 		"192.168.43.33"
+#define TCP_PORT 			8686
+#define TCP_SERVER_STR 	"43.33: 8686"
+// #define TCP_SERVER 		"192.168.87.78"
+// #define TCP_PORT 			4321
+// #define TCP_SERVER_STR 	"16.1: 4321"
 
 /* ������USART_RX_DATA�������Ͷ���ŵ�usart.hͷ�ļ�
 #define RXBUF_SIZE 	512
