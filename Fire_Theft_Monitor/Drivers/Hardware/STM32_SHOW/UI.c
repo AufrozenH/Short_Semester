@@ -144,7 +144,6 @@ void UI_Init(void)
 //-------------------------------------------------------------------------------------------------------------------
 void SYS_state(void)
 {
-	static uint8_t send_state = 0;
 	//默认就是一种初始化的UI_Select
 	//这里的状态机就是为的显示初始人物姓名的大头照
 	switch(UI_Select){
@@ -159,13 +158,14 @@ void SYS_state(void)
 	Warn_Count();
 	BeepDone();
 
-	if(send_state==0 && g_esp01.bConnect == 3)
+	if(send_state ==1)
 	{
-		sprintf(upstr,"param:%6d,%6d,%6d,%6.1f\n",sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
+		sprintf(upstr,"TEMP:%5.1f, axyz:%6d,%6d,%6d, gxyz:%6d,%6d%6d, ang:%6.1f,%6.1f,%6.1f,state:%6d,%6d,param:%6d,%6d,%6d,%6.1f\n",
+			Temp,ax,ay,az,gx,gy,gz,fAX,fAY,fAZ,Temp_state,Shock_state,sys_set.Temp_stand,sys_set.Shock_sens,sys_set.Alarm_time,sys_set.Upload_inter);
 		esp01_send_cnt+=strlen(upstr);
 		if(!esp01_blink_flag) esp01_blink_flag=1;
 		SendEspStr(upstr);
-		send_state=1;
+		send_state++;
 	}
 
 #ifdef WIFI_MODE

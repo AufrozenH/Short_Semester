@@ -3,7 +3,7 @@
 <title>Static Call Graph - [Fire_Theft_Monitor\Fire_Theft_Monitor.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Fire_Theft_Monitor\Fire_Theft_Monitor.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Fri Apr 26 21:11:36 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Sat Apr 27 11:56:49 2024
 <BR><P>
 <H3>Maximum Stack Usage =        880 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1556,7 +1556,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartDataTask
 </UL>
 
-<P><STRONG><a name="[10b]"></a>InitEsp01</STRONG> (Thumb, 700 bytes, Stack size 104 bytes, esp01.o(.text.InitEsp01))
+<P><STRONG><a name="[10b]"></a>InitEsp01</STRONG> (Thumb, 704 bytes, Stack size 104 bytes, esp01.o(.text.InitEsp01))
 <BR><BR>[Stack]<UL><LI>Max Depth = 256 + Unknown Stack Size
 <LI>Call Chain = InitEsp01 &rArr; osMessageQueueNew &rArr; xQueueGenericCreate &rArr; pvPortMalloc &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
@@ -1771,8 +1771,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartDataTask
 </UL>
 
-<P><STRONG><a name="[141]"></a>SYS_state</STRONG> (Thumb, 200 bytes, Stack size 40 bytes, ui.o(.text.SYS_state))
-<BR><BR>[Stack]<UL><LI>Max Depth = 344 + Unknown Stack Size
+<P><STRONG><a name="[141]"></a>SYS_state</STRONG> (Thumb, 422 bytes, Stack size 168 bytes, ui.o(.text.SYS_state))
+<BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = SYS_state &rArr; ESP_upload_data &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendEspStr
@@ -1853,7 +1853,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.text.MX_FREERTOS_Init)
 </UL>
 <P><STRONG><a name="[63]"></a>StartMainTask</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, freertos.o(.text.StartMainTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 344 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = StartMainTask &rArr; SYS_state &rArr; ESP_upload_data &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYS_state

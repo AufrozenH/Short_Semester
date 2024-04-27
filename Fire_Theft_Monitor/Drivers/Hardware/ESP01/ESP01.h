@@ -47,6 +47,7 @@ typedef struct {
 	char strESPName[20];
 } ESP01;
 
+extern uint16_t send_state;
 extern ESP01 g_esp01;
 uint8_t EspRxDataOk(void);		// �������ݴ���
 void SendEspStr(char *str);		// �����ַ���

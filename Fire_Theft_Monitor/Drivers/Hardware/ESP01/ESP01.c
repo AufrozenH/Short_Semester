@@ -5,6 +5,7 @@
 #include "UI.h"
 #include "MPU6050.h"
 
+uint16_t send_state=0;
 ESP01 g_esp01;
 
 UART_HandleTypeDef* pESPHandle;
@@ -47,33 +48,33 @@ void InitEsp01(UART_HandleTypeDef* pUartHandle)
 	g_esp01.bAtOK = 0;
 	g_esp01.bConnect = 0;
 	
-	printf("�˳�ESP01ģ��͸��ģʽ...\n");
+	printf("退出ESP01模块透传模式...\n");
 	SendATCmd("+++", 500);
 	
-	printf("����ESP01ģ���Ƿ����...\n");
+	printf("测试ESP01模块是否存在...\n");
 	SendATCmd("AT\r\n", 1000);
 	
 	if (g_esp01.bAtOK)
 	{
-		printf("�ر�ģ�����\n");
+		printf("关闭模块回显\n");
 		SendATCmd("ATE0\r\n", 500);
-		printf("�鿴ģ��汾��Ϣ...\n");
+		printf("查看模块版本信息...\n");
 		SendATCmd("AT+GMR\r\n", 1000);
 
-		printf("����AP+STAģʽ\n");
+		printf("开启AP+STA模式\n");
 		SendATCmd("AT+CWMODE=3\r\n", 500);
 		
-		printf("��ѯSSID\n");
+		printf("查询SSID\n");
 		SendATCmd("AT+CWSAP?\r\n", 500);
 
-		printf("��ѯ��ǰ���ӵ��ȵ�\n");
+		printf("查询当前连接的热点\n");
 		SendATCmd("AT+CWJAP?\r\n", 500);
 	
 		if (strcmp(g_esp01.strAPName, AP_NAME))
 		{
 //		printf("�Ͽ���ǰ���ӵ��ȵ�\n");
 //		SendATCmd("AT+CWQAP\r\n", 500);
-			printf("����WiFi�ȵ�\n");
+			printf("连接WiFi热点\n");
 			g_esp01.bConnect = 1;
 			sprintf(buf, "AT+CWJAP=\"%s\",\"%s\"\r\n", AP_NAME, AP_PSW);
 			SendATCmd(buf, 10000);
@@ -83,19 +84,20 @@ void InitEsp01(UART_HandleTypeDef* pUartHandle)
 		
 		if (g_esp01.bConnect > 1)
 		{
-			printf("��ѯ�豸IP\n");
+			printf("查询设备IP\n");
 			SendATCmd("AT+CIFSR\r\n", 500);
 			
-			printf("��ѯ��ǰ���ӵ�TCP������\n");
+			printf("查询当前连接的TCP服务器\n");
 			SendATCmd("AT+CIPSTATUS\r\n", 500);
 			
-			printf("����Զ��TCP������...\n");
+			printf("连接远程TCP服务器...\n");
 			sprintf(buf, "AT+CIPSTART=\"TCP\",\"%s\",%d\r\n", TCP_SERVER, TCP_PORT);
 			SendATCmd(buf, 2000);
-			printf("����͸��ģʽ\n");
+			printf("开启透传模式\n");
 			SendATCmd("AT+CIPMODE=1\r\n", 500);
-			printf("��ʼ͸��\n");
-			SendATCmd("AT+CIPSEND\r\n", 500);
+			printf("开始透传\n");
+			SendATCmd("AT+CIPSEND\r\n", 500);			
+			send_state=1;
 		}
 	}
 }
@@ -153,12 +155,12 @@ void ProcEsp01Data(USART_RX_DATA *pdata)
 
 				if (strstr(pstr, "CONNECT\r\n\r\nOK") == pstr && g_esp01.bConnect == 2)
 				{
-					g_esp01.bConnect = 3;		// ������TCP������
+					g_esp01.bConnect = 3;		// 已连接TCP服务器
 					printf("ESP01 conn:3\n");
 				}
 				else if (strstr(pstr, "ALREADY CONNECTED") == pstr && g_esp01.bConnect == 2)
 				{
-					g_esp01.bConnect = 3;		// ������TCP������
+					g_esp01.bConnect = 3;		// 已连接TCP服务器
 					printf("ESP01 conn:3\n");
 					
 				}
@@ -167,7 +169,7 @@ void ProcEsp01Data(USART_RX_DATA *pdata)
 					char *pc = strstr(pstr + 8, "\"");
 					if (pc > pstr + 8)
 					{
-						// SSID����
+						// SSID名称
 						strncpy(g_esp01.strESPName, pstr + 8, pc - pstr - 8);
 					}
 				}
@@ -176,7 +178,7 @@ void ProcEsp01Data(USART_RX_DATA *pdata)
 					char *pc = strstr(pstr + 8, "\"");
 					if (pc > pstr + 8)
 					{
-						// �����ӵ��ȵ�����
+						// 已连接的热点名称
 						strncpy(g_esp01.strAPName, pstr + 8, pc - pstr - 8);
 					}
 				}
