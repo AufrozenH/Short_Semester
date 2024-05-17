@@ -1,9 +1,9 @@
 fire_theft_monitor/list.o: \
   ..\Middlewares\Third_Party\FreeRTOS\Source\list.c \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
-  D:\ProgramFiles\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Core\Inc\FreeRTOSConfig.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \
